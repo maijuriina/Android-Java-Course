@@ -4,19 +4,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button button; // introduce button
+    TextView textView; // introduce textView for Hello World
     public static final String TAG = "TestApplicationMessage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = (Button) findViewById(R.id.button); // find button
+        button = (Button) findViewById(R.id.button); // find finish-button
         button.setOnClickListener(this); // this meaning this class
 
         Log.d(TAG, "App activated successfully");
@@ -34,9 +36,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.button:
                 Log.e("test", "Button has been clicked!");
+                textView = findViewById(R.id.textView);
+                if (textView.getVisibility() == View.VISIBLE) {
+                    textView.setVisibility(View.INVISIBLE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                };
                 break;
         }
     }

@@ -13,15 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton[] cardButtons = new ImageButton[4]; // introduce array for imagebuttons
-    int[] shuffledCards = newShuffle();
-    int firstCard = shuffledCards[0];
-    int secondCard = shuffledCards[1];
-    int thirdCard = shuffledCards[2];
-    int fourthCard = shuffledCards[3];
+    int[] shuffledCards;
 
     FloatingActionButton floatingShuffle; // shuffle again button introduction
 
@@ -41,7 +38,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         floatingShuffle = (FloatingActionButton) findViewById(R.id.floatingShuffle); // connect to id
         floatingShuffle.setOnClickListener(this);
 
-        newShuffle();
+        shuffledCards = newShuffle();
     }
 
     @Override
@@ -49,7 +46,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.imageButton0:
                 Log.e("test", "Button 1 has been clicked!");
-                if(0 == shuffledCards[0]) {
+                System.out.println(Arrays.toString(shuffledCards));
+                if(shuffledCards[0] == 0) {
+                    
                     Log.e("TOIMISAATANA", "Oikein!"); }
                 else {
                     Log.e("TOIMISAATANA", "Väärin!"); }
@@ -65,7 +64,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.floatingShuffle:
                 Log.e("test", "Shuffle button has been clicked!");
-                newShuffle();
+                shuffledCards = newShuffle();
                 break;
         }
     }

@@ -7,4 +7,5 @@
     <string name="image_description">Kuva violetinsävyisestä galaksista</string>
     <string name="openGame">Pelaa Jännittävää Korttipeliä!</string>
     <string name="game_name">Jännittävä Korttipeli</string>
+    <string name="game_guide">Etsi maaginen kortti!</string>
 </resources>

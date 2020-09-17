@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -19,6 +21,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton[] cardButtons = new ImageButton[4]; // introduce array for imagebuttons
     int[] shuffledCards;
+    ImageButton imageButton;
 
     FloatingActionButton floatingShuffle; // shuffle again button introduction
 
@@ -43,39 +46,53 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Animation flipAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flipanimation);
+        Animation fadeAnimationWrong = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeanimationend);
         switch (v.getId()) {
             case R.id.imageButton0:
+                imageButton = findViewById(R.id.imageButton0);
                 Log.e("test", "Button 1 has been clicked!");
                 System.out.println(Arrays.toString(shuffledCards));
                 if(shuffledCards[0] == 0) {
+                    imageButton.startAnimation(flipAnimation);
                     Log.e("TOIMISAATANA", "Oikein!");
                     shuffledCards = newShuffle();}
                 else {
-                    Log.e("TOIMISAATANA", "Väärin!"); }
+                    Log.e("TOIMISAATANA", "Väärin!");
+                    imageButton.startAnimation(fadeAnimationWrong);}
                 break;
             case R.id.imageButton1:
+                imageButton = findViewById(R.id.imageButton1);
                 Log.e("test", "Button 2 has been clicked!");
                 if(shuffledCards[1] == 0) {
+                    imageButton.startAnimation(flipAnimation);
                     Log.e("TOIMISAATANA", "Oikein!");
                     shuffledCards = newShuffle();}
                 else {
-                    Log.e("TOIMISAATANA", "Väärin!"); }
+                    Log.e("TOIMISAATANA", "Väärin!");
+                    imageButton.startAnimation(fadeAnimationWrong);}
                 break;
             case R.id.imageButton2:
+                imageButton = findViewById(R.id.imageButton2);
                 Log.e("test", "Button 3 has been clicked!");
                 if(shuffledCards[2] == 0) {
+                    imageButton.startAnimation(flipAnimation);
                     Log.e("TOIMISAATANA", "Oikein!");
                     shuffledCards = newShuffle();}
                 else {
-                    Log.e("TOIMISAATANA", "Väärin!"); }
+                    Log.e("TOIMISAATANA", "Väärin!");
+                    imageButton.startAnimation(fadeAnimationWrong);}
                 break;
             case R.id.imageButton3:
+                imageButton = findViewById(R.id.imageButton3);
                 Log.e("test", "Button 4 has been clicked!");
                 if(shuffledCards[3] == 0) {
+                    imageButton.startAnimation(flipAnimation);
                     Log.e("TOIMISAATANA", "Oikein!");
                     shuffledCards = newShuffle();}
                 else {
-                    Log.e("TOIMISAATANA", "Väärin!"); }
+                    Log.e("TOIMISAATANA", "Väärin!");
+                    imageButton.startAnimation(fadeAnimationWrong);}
                 break;
             case R.id.floatingShuffle:
                 Log.e("test", "Shuffle button has been clicked!");

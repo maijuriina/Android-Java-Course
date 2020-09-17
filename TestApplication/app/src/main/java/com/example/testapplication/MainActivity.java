@@ -1,5 +1,6 @@
 package com.example.testapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button; // introduce button
     TextView textView; // introduce textView for Hello World
     public static final String TAG = "TestApplicationMessage";
+    public static final String TESTAPPLICATION_EXTRA_MESSAGE = "com.example.testapplication.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +27,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG, "Log sent from onCreate()");
         Log.w(TAG, "Running out of things to log!");
         Log.e(TAG, "Fatal error! Could not find more things to log.");
-
-        /*Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.e("test", "Button has been clicked!");
-            }
-        });*/
     }
+
+        public void startActivity(View view) {
+            Intent intent = new Intent(this, GameActivity.class);
+            startActivity(intent);
+        }
 
     @Override
     public void onClick(View view) {
@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     textView.setVisibility(View.VISIBLE);
                 };
+                break;
+            case R.id.gameButton:
+                startActivity(view);
                 break;
         }
     }

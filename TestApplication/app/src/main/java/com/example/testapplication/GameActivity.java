@@ -48,19 +48,34 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("test", "Button 1 has been clicked!");
                 System.out.println(Arrays.toString(shuffledCards));
                 if(shuffledCards[0] == 0) {
-                    
-                    Log.e("TOIMISAATANA", "Oikein!"); }
+                    Log.e("TOIMISAATANA", "Oikein!");
+                    shuffledCards = newShuffle();}
                 else {
                     Log.e("TOIMISAATANA", "Väärin!"); }
                 break;
             case R.id.imageButton1:
                 Log.e("test", "Button 2 has been clicked!");
+                if(shuffledCards[1] == 0) {
+                    Log.e("TOIMISAATANA", "Oikein!");
+                    shuffledCards = newShuffle();}
+                else {
+                    Log.e("TOIMISAATANA", "Väärin!"); }
                 break;
             case R.id.imageButton2:
                 Log.e("test", "Button 3 has been clicked!");
+                if(shuffledCards[2] == 0) {
+                    Log.e("TOIMISAATANA", "Oikein!");
+                    shuffledCards = newShuffle();}
+                else {
+                    Log.e("TOIMISAATANA", "Väärin!"); }
                 break;
             case R.id.imageButton3:
                 Log.e("test", "Button 4 has been clicked!");
+                if(shuffledCards[3] == 0) {
+                    Log.e("TOIMISAATANA", "Oikein!");
+                    shuffledCards = newShuffle();}
+                else {
+                    Log.e("TOIMISAATANA", "Väärin!"); }
                 break;
             case R.id.floatingShuffle:
                 Log.e("test", "Shuffle button has been clicked!");

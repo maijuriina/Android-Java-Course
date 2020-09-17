@@ -11,17 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button button; // introduce button
+    Button button; // introduce Finish-button
+    Button gameButton; // introduce Play game-button
     TextView textView; // introduce textView for Hello World
     public static final String TAG = "TestApplicationMessage";
-    public static final String TESTAPPLICATION_EXTRA_MESSAGE = "com.example.testapplication.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         button = (Button) findViewById(R.id.button); // find finish-button
         button.setOnClickListener(this); // this meaning this class
+
+        gameButton = (Button) findViewById(R.id.gameButton); // find play-button
+        gameButton.setOnClickListener(this); // this meaning this class
 
         Log.d(TAG, "App activated successfully");
         Log.i(TAG, "Log sent from onCreate()");

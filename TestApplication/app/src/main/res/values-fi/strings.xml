@@ -5,6 +5,6 @@
     <string name="finish">Lopeta</string>
     <string name="hello_world">Hei Maailma!</string>
     <string name="image_description">Kuva violetinsävyisestä galaksista</string>
-    <string name="openGame">Pelaa!</string>
-    <string name="game_name">Korttipeli</string>
+    <string name="openGame">Pelaa Jännittävää Korttipeliä!</string>
+    <string name="game_name">Jännittävä Korttipeli</string>
 </resources>

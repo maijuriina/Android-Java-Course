@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,7 +58,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Animation flipAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flipanimation); // introduce flipAnimation when right
         Animation fadeAnimationWrong = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeanimationend); // introduce fadeAnimation when wrong
         // switch case for clicked buttons
         switch (v.getId()) {
@@ -70,16 +70,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
+                        TextView highScoreField = findViewById(R.id.highscore); // find highscore-field from xml
+                        highScoreField.setText(String.valueOf(checkHighScore())); // set highscore to xml
                     }
-                    imageButton.startAnimation(flipAnimation);
-                    Log.e("TOIMISAATANA", "Oikein!");
+                    Log.e("Correct/False: ", "Correct!");
                     shuffledCards = newShuffle(currentScore);} // pass current score to newShuffle
                 else {
                     currentScore = 0;
-                    Log.e("TOIMISAATANA", "Väärin!");
-                    imageButton.startAnimation(fadeAnimationWrong);
-                    finish();
-                    startActivity(getIntent());}
+                    Log.e("Correct/False: ", "False!");
+                    imageButton.startAnimation(fadeAnimationWrong);}
                 break;
             case R.id.imageButton1:
                 imageButton = findViewById(R.id.imageButton1);
@@ -89,16 +88,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
+                        TextView highScoreField = findViewById(R.id.highscore); // find highscore-field from xml
+                        highScoreField.setText(String.valueOf(checkHighScore()));
                     }
-                    imageButton.startAnimation(flipAnimation);
-                    Log.e("TOIMISAATANA", "Oikein!");
+                    Log.e("Correct/False: ", "Correct!");
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
-                    Log.e("TOIMISAATANA", "Väärin!");
-                    imageButton.startAnimation(fadeAnimationWrong);
-                    finish();
-                    startActivity(getIntent());}
+                    Log.e("Correct/False: ", "False!");
+                    imageButton.startAnimation(fadeAnimationWrong); }
                 break;
             case R.id.imageButton2:
                 imageButton = findViewById(R.id.imageButton2);
@@ -108,16 +106,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
+                        TextView highScoreField = findViewById(R.id.highscore); // find highscore-field from xml
+                        highScoreField.setText(String.valueOf(checkHighScore()));
                     }
-                    imageButton.startAnimation(flipAnimation);
-                    Log.e("TOIMISAATANA", "Oikein!");
+                    Log.e("Correct/False: ", "Correct!");
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
-                    Log.e("TOIMISAATANA", "Väärin!");
-                    imageButton.startAnimation(fadeAnimationWrong);
-                    finish();
-                    startActivity(getIntent());}
+                    Log.e("Correct/False: ", "False!");
+                    imageButton.startAnimation(fadeAnimationWrong); }
                 break;
             case R.id.imageButton3:
                 imageButton = findViewById(R.id.imageButton3);
@@ -127,16 +124,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
+                        TextView highScoreField = findViewById(R.id.highscore); // find highscore-field from xml
+                        highScoreField.setText(String.valueOf(checkHighScore()));
                     }
-                    imageButton.startAnimation(flipAnimation);
-                    Log.e("TOIMISAATANA", "Oikein!");
+                    Log.e("Correct/False: ", "Correct!");
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
-                    Log.e("TOIMISAATANA", "Väärin!");
-                    imageButton.startAnimation(fadeAnimationWrong);
-                    finish();
-                    startActivity(getIntent());}
+                    Log.e("Correct/False: ", "False!");
+                    imageButton.startAnimation(fadeAnimationWrong); }
                 break;
             case R.id.floatingShuffle:
                 currentScore = 0;

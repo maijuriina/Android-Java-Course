@@ -7,4 +7,6 @@
     <string name="image_description">Image of a purple-hued galaxy</string>
     <string name="game_name">The Thrilling Card Game</string>
     <string name="game_guide">Find the magic card!</string>
+    <string name="highscore"></string>
+    <string name="highscoretext">High score: </string>
 </resources>

@@ -8,4 +8,6 @@
     <string name="openGame">Pelaa Jännittävää Korttipeliä!</string>
     <string name="game_name">Jännittävä Korttipeli</string>
     <string name="game_guide">Etsi maaginen kortti!</string>
+    <string name="highscore"></string>
+    <string name="highscoretext">Ennätys: </string>
 </resources>

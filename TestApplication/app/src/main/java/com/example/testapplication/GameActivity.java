@@ -67,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.println(Arrays.toString(shuffledCards));
                 if(shuffledCards[0] == 0) {
                     currentScore++;
+                    setCurrentScore(currentScore); // start function to update currentScore for user
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
@@ -77,6 +78,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     shuffledCards = newShuffle(currentScore);} // pass current score to newShuffle
                 else {
                     currentScore = 0;
+                    setCurrentScore(currentScore);
                     Log.e("Correct/False: ", "False!");
                     imageButton.startAnimation(fadeAnimationWrong);}
                 break;
@@ -85,6 +87,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("test", "Button 2 has been clicked!");
                 if(shuffledCards[1] == 0) {
                     currentScore++;
+                    setCurrentScore(currentScore);
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
@@ -95,6 +98,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
+                    setCurrentScore(currentScore);
                     Log.e("Correct/False: ", "False!");
                     imageButton.startAnimation(fadeAnimationWrong); }
                 break;
@@ -103,6 +107,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("test", "Button 3 has been clicked!");
                 if(shuffledCards[2] == 0) {
                     currentScore++;
+                    setCurrentScore(currentScore);
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
@@ -113,6 +118,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
+                    setCurrentScore(currentScore);
                     Log.e("Correct/False: ", "False!");
                     imageButton.startAnimation(fadeAnimationWrong); }
                 break;
@@ -121,6 +127,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("test", "Button 4 has been clicked!");
                 if(shuffledCards[3] == 0) {
                     currentScore++;
+                    setCurrentScore(currentScore);
                     if(currentScore>checkHighScore()) {
                         int highScore = currentScore;
                         updateHighScore(highScore);
@@ -131,11 +138,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     shuffledCards = newShuffle(currentScore);}
                 else {
                     currentScore = 0;
+                    setCurrentScore(currentScore);
                     Log.e("Correct/False: ", "False!");
                     imageButton.startAnimation(fadeAnimationWrong); }
                 break;
             case R.id.floatingShuffle:
                 currentScore = 0;
+                setCurrentScore(currentScore);
                 Log.e("test", "Shuffle button has been clicked!");
                 shuffledCards = newShuffle(currentScore);
                 break;
@@ -179,5 +188,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences.Editor myEditor = myPreferences.edit(); // call on SP-object's editor to add data to file
             myEditor.putInt("HIGHSCORE", highScore); // add Int to file with key
             myEditor.commit();
+    }
+
+    public void setCurrentScore(int currentScore) {
+        TextView currentScoreField = findViewById(R.id.current_score); // find current_score from xml
+        currentScoreField.setText(String.valueOf(currentScore));
     }
 }

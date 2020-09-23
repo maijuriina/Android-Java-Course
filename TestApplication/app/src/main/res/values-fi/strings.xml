@@ -10,4 +10,7 @@
     <string name="game_guide">Etsi maaginen kortti!</string>
     <string name="highscore"></string>
     <string name="highscoretext">Ennätys: </string>
+    <string name="title_home">Koti</string>
+    <string name="title_dashboard">Kojelauta</string>
+    <string name="title_notifications">Ilmoitukset</string>
 </resources>

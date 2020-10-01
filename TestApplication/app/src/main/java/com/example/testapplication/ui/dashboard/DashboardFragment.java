@@ -90,8 +90,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        // tähän vaihtuvat koordinaatit
-
+        // here whenever the location changes, the location is changed
+        setCoordinates(location);
     }
 
     @Override

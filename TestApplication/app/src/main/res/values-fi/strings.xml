@@ -13,4 +13,7 @@
     <string name="title_home">Koti</string>
     <string name="title_dashboard">Kojelauta</string>
     <string name="title_notifications">Ilmoitukset</string>
+    <string name="longitude">Pituussuunta</string>
+    <string name="latitude">Leveyssuunta</string>
+    <string name="address">Osoite</string>
 </resources>

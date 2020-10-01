@@ -21,11 +21,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.testapplication.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener, LocationListener {
 
     private DashboardViewModel dashboardViewModel;
     LocationManager locationManager;
+    Location lastLocation;
+    TextInputLayout latitude; // introduce xml's textinputlayouts
+    TextInputLayout longitude;
+    TextInputLayout address;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 111; // giving a number value for the request in question
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,6 +50,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         });*/
         // find locationManager
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        latitude = (TextInputLayout)root.findViewById(R.id.textInputLayout); // find xml counterparts
+        longitude = (TextInputLayout)root.findViewById(R.id.textInputLayout2);
+        address = (TextInputLayout)root.findViewById(R.id.textInputLayout3);
         startLocationUpdates();
         return root;
     }
@@ -54,8 +65,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 1, this);
-
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        // provider may be GPS_PROVIDER | NETWORK_PROVIDER | PASSIVE_PROVIDER
+        lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        setCoordinates(lastLocation);
     }
 
     @Override
@@ -77,11 +90,17 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        // tähän vaihtuvat koordinaatit
 
     }
 
     @Override
     public void onClick(View view) {
 
+    }
+
+    public void setCoordinates(Location l) {
+        latitude.setHint(String.valueOf(l.getLatitude()));
+        longitude.setHint(String.valueOf(l.getLongitude()));
     }
 }

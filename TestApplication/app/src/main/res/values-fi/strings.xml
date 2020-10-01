@@ -11,7 +11,8 @@
     <string name="highscore"></string>
     <string name="highscoretext">Ennätys: </string>
     <string name="title_home">Koti</string>
-    <string name="title_dashboard">Kojelauta</string>
+    <string name="title_dashboard">Sijainti</string>
+    <string name="dashboard_header">Koordinaattisi</string>
     <string name="title_notifications">Ilmoitukset</string>
     <string name="longitude">Pituussuunta</string>
     <string name="latitude">Leveyssuunta</string>

@@ -3,6 +3,8 @@ package com.example.testapplication.ui.dashboard;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +28,10 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class DashboardFragment extends Fragment implements View.OnClickListener, LocationListener {
 
     private DashboardViewModel dashboardViewModel;
@@ -35,6 +41,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     TextInputLayout longitude;
     TextInputLayout address;
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 111; // giving a number value for the request in question
+    Geocoder geocoder; // class for finding location on map
+    List<Address> addresses;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +76,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
         // provider may be GPS_PROVIDER | NETWORK_PROVIDER | PASSIVE_PROVIDER
         lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        setCoordinates(lastLocation);
+        setOnUI(lastLocation);
     }
 
     @Override
@@ -91,7 +99,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onLocationChanged(@NonNull Location location) {
         // here whenever the location changes, the location is changed
-        setCoordinates(location);
+        setOnUI(location);
     }
 
     @Override
@@ -99,8 +107,27 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
 
     }
 
-    public void setCoordinates(Location l) {
+    // setCoordinates sets values to the TextInputLayouts hint
+    public void setOnUI(Location l) {
         latitude.setHint(String.valueOf(l.getLatitude()));
         longitude.setHint(String.valueOf(l.getLongitude()));
+        findOnMap(l); // send to map
+    }
+
+    // find address on map based on location
+    public void findOnMap(Location l) {
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 1); // Here 1 represent maxResults
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String addressLine = addresses.get(0).getAddressLine(0); // getAddressLine returns a line of the address
+        // numbered by the given index
+        String city = addresses.get(0).getLocality();
+        String country = addresses.get(0).getCountryName();
+        String postalCode = addresses.get(0).getPostalCode();
+        address.setHint(addressLine);
     }
 }

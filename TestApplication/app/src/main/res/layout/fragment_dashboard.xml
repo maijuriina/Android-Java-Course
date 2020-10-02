@@ -10,8 +10,7 @@
         android:id="@+id/dashboard_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="183dp"
-        android:layout_marginBottom="75dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="sans-serif-thin"
         android:text="@string/dashboard_header"
         android:textColor="#9C27B0"
@@ -27,13 +26,15 @@
         android:id="@+id/constraintLayout"
         android:layout_width="411dp"
         android:layout_height="276dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="25dp"
         android:clickable="false"
         android:clipChildren="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mapButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_header">
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow2"
@@ -54,6 +55,7 @@
             android:id="@+id/textInputLayout"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            app:helperText="@string/latitude"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +71,7 @@
             android:id="@+id/textInputLayout2"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            app:helperText="@string/longitude"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -85,6 +88,7 @@
             android:id="@+id/textInputLayout3"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            app:helperText="@string/address"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -96,5 +100,16 @@
                 android:hint="@string/address" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/mapButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

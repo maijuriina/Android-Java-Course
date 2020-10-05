@@ -2,16 +2,19 @@ package com.example.testapplication.ui.dashboard;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 111; // giving a number value for the request in question
     Geocoder geocoder; // class for finding location on map
     List<Address> addresses;
+    Button mapButton; // introduce xml's mapButton
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         latitude = (TextInputLayout)root.findViewById(R.id.textInputLayout); // find xml counterparts
         longitude = (TextInputLayout)root.findViewById(R.id.textInputLayout2);
         address = (TextInputLayout)root.findViewById(R.id.textInputLayout3);
+        mapButton = root.findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(this);
         startLocationUpdates();
         return root;
     }
@@ -73,7 +79,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 100, this);
         // provider may be GPS_PROVIDER | NETWORK_PROVIDER | PASSIVE_PROVIDER
         lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         setOnUI(lastLocation);
@@ -104,6 +110,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.mapButton:
+                showOnMap(lastLocation);
+        }
 
     }
 
@@ -111,7 +121,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     public void setOnUI(Location l) {
         latitude.setHint(String.valueOf(l.getLatitude()));
         longitude.setHint(String.valueOf(l.getLongitude()));
-        findOnMap(l); // send to map
+        findOnMap(l); // show address
     }
 
     // find address on map based on location
@@ -129,5 +139,22 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         String country = addresses.get(0).getCountryName();
         String postalCode = addresses.get(0).getPostalCode();
         address.setHint(addressLine);
+    }
+
+    public void showOnMap(Location l) {
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        Uri gmmIntentUri = Uri.parse("geo:" + l.getLatitude() + "," + l.getLongitude());
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+
+        if (mapIntent.resolveActivity(getActivity().getApplicationContext().getPackageManager()) != null) {
+            // Make the Intent explicit by setting the Google Maps package
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            // Attempt to start an activity that can handle the Intent
+            startActivity(mapIntent);
+        }
+
     }
 }

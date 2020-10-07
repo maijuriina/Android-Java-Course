@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -127,18 +128,20 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     // find address on map based on location
     public void findOnMap(Location l) {
         geocoder = new Geocoder(getContext(), Locale.getDefault());
+        // addresses = new ArrayList<>();
         try {
             addresses = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 1); // Here 1 represent maxResults
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        String addressLine = addresses.get(0).getAddressLine(0); // getAddressLine returns a line of the address
-        // numbered by the given index
-        String city = addresses.get(0).getLocality();
-        String country = addresses.get(0).getCountryName();
-        String postalCode = addresses.get(0).getPostalCode();
-        address.setHint(addressLine);
+        if (addresses != null) {
+            String addressLine = addresses.get(0).getAddressLine(0); // getAddressLine returns a line of the address
+            // numbered by the given index
+            String city = addresses.get(0).getLocality();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            address.setHint(addressLine);
+        }
     }
 
     public void showOnMap(Location l) {

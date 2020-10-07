@@ -1,5 +1,9 @@
 package com.example.testapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -11,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class BottomNavigationActivity extends AppCompatActivity {
+    BroadcastReceiver br = new ApmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,25 @@ public class BottomNavigationActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // register ApmReceiver "br" for receiving information
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        this.registerReceiver(br, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // when the application is stopped, unregister the receiver
+        if(br != null) {
+            unregisterReceiver(br);
+        }
     }
 
 }

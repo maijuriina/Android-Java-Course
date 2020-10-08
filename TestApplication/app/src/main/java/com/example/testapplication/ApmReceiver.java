@@ -20,16 +20,11 @@ public class ApmReceiver extends BroadcastReceiver {
         sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
         String log = sb.toString();
         Log.d(TAG, log);
-        if (isAirplaneModeOn(context)) {
+
+        if (state) {
             Toast.makeText(context, "AIRPLANE MODE ON", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Toast.makeText(context, "AIRPLANE MODE OFF", Toast.LENGTH_SHORT).show();
         }
-        //Toast.makeText(context, log, Toast.LENGTH_LONG).show();
-    }
-
-    private static boolean isAirplaneModeOn(Context context) {
-        return Settings.System.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
     }
 }

@@ -19,7 +19,7 @@
         <receiver
             android:name=".ApmReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity android:name=".BottomNavigationActivity">
             <intent-filter>

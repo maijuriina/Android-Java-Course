@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +55,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        /*final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         // find locationManager
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         latitude = (TextInputLayout)root.findViewById(R.id.textInputLayout); // find xml counterparts
@@ -80,10 +74,12 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 100, this);
-        // provider may be GPS_PROVIDER | NETWORK_PROVIDER | PASSIVE_PROVIDER
-        lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        setOnUI(lastLocation);
+        if (locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 100, this);
+            // provider may be GPS_PROVIDER | NETWORK_PROVIDER | PASSIVE_PROVIDER
+            lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            setOnUI(lastLocation);
+        }
     }
 
     @Override
@@ -106,7 +102,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onLocationChanged(@NonNull Location location) {
         // here whenever the location changes, the location is changed
-        setOnUI(location);
+        if (location != null) {
+            setOnUI(location);
+        }
     }
 
     @Override
@@ -115,7 +113,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             case R.id.mapButton:
                 showOnMap(lastLocation);
         }
-
     }
 
     // setCoordinates sets values to the TextInputLayouts hint
@@ -130,20 +127,18 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         try {
             geocoder = new Geocoder(getContext(), Locale.getDefault());
             addresses = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 1); // Here 1 represent maxResults
-            if (addresses != null) {
                 String addressLine = addresses.get(0).getAddressLine(0); // getAddressLine returns a line of the address
                 // numbered by the given index
-                String city = addresses.get(0).getLocality();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
+                // String city = addresses.get(0).getLocality();
+                // String country = addresses.get(0).getCountryName();
+                // String postalCode = addresses.get(0).getPostalCode();
                 address.setHint(addressLine);
-            } else {
-                address.setHint(getResources().getString(R.string.addressMissing));
-            }
+                Log.e("ATTENTIONERRORMSG", "Not null address");
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("ATTENTIONERRORMSG", "On null address");
+            address.setHint(getResources().getString(R.string.addressMissing));
         }
-
     }
 
     public void showOnMap(Location l) {
@@ -161,5 +156,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             startActivity(mapIntent);
         }
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        locationManager.removeUpdates(this);
     }
 }

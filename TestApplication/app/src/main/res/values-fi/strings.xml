@@ -19,4 +19,5 @@
     <string name="address">Osoite</string>
     <string name="mapButton">Näytä kartalla</string>
     <string name="addressMissing">Osoitteen haku ei onnistu</string>
+    <string name="setTimer">Aseta ajastin!</string>
 </resources>

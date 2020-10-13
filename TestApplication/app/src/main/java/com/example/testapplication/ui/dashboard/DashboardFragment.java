@@ -39,7 +39,6 @@ import java.util.Locale;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener, LocationListener {
 
-    private DashboardViewModel dashboardViewModel;
     LocationManager locationManager;
     Location lastLocation;
     TextInputLayout latitude; // introduce xml's textinputlayouts
@@ -52,8 +51,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         // find locationManager
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);

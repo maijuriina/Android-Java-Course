@@ -7,11 +7,14 @@
     <string name="image_description">Image of a purple-hued galaxy</string>
     <string name="game_name">The Thrilling Card Game</string>
     <string name="game_guide">Find the magic card!</string>
-    <string name="highscore" translatable="false"></string>
+    <string name="highscore" translatable="false" />
     <string name="highscoretext">High score: </string>
     <string name="title_activity_bottom_navigation" translatable="false">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Location</string>
+    <string name="pickedTimeMin" translatable="false">0</string>
+    <string name="pickedTimeSec" translatable="false">0</string>
+    <string name="divider" translatable="false"> : </string>
     <string name="dashboard_header">Your coordinates</string>
     <string name="title_notifications">Notifications</string>
     <string name="latitude">Latitude</string>

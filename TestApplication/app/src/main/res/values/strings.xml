@@ -23,4 +23,8 @@
     <string name="mapButton">Show on map</string>
     <string name="addressMissing">Unable to search address</string>
     <string name="setTimer">Set a timer!</string>
+    <string name="stopTimer">STOP</string>
+    <string name="startTimer">START</string>
+    <string name="pauseTimer">PAUSE</string>
+    <string name="continueTimer">RESUME</string>
 </resources>

@@ -20,4 +20,8 @@
     <string name="mapButton">Näytä kartalla</string>
     <string name="addressMissing">Osoitteen haku ei onnistu</string>
     <string name="setTimer">Aseta ajastin!</string>
+    <string name="stopTimer">STOP</string>
+    <string name="startTimer">ALOITA</string>
+    <string name="continueTimer">JATKA</string>
+    <string name="pauseTimer">KESKEYTÄ</string>
 </resources>

@@ -27,4 +27,7 @@
     <string name="startTimer">START</string>
     <string name="pauseTimer">PAUSE</string>
     <string name="continueTimer">RESUME</string>
+    <string name="timerNotRunning">Timer not running</string>
+    <string name="timerRunning">"Time remaining: "</string>
+    <string name="timerDone">FINISHED!</string>
 </resources>

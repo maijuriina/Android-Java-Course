@@ -23,6 +23,7 @@
     <string name="stopTimer">STOP</string>
     <string name="startTimer">ALOITA</string>
     <string name="continueTimer">JATKA</string>
+    <string name="startedTimer">KÄYNNISSÄ</string>
     <string name="pauseTimer">KESKEYTÄ</string>
     <string name="timerNotRunning">Ajastin ei käynnissä</string>
     <string name="timerRunning">"Aikaa jäljellä: "</string>

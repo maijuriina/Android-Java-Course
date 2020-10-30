@@ -29,19 +29,21 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
     private NumberPicker noPickerSec;
     private String[] pickerValsSec;
     private String[] pickerValsMin;
-    private TextView pickedTimeSec;
-    private TextView pickedTimeMin;
+    private TextView remainingTimeSec;
+    private TextView remainingTimeMin;
     private int minPicked;
     private int secPicked;
     private long timePicked;
     private MaterialButtonToggleGroup toggleGroup;
-    private Button startPauseButton;
+    private Button playButton;
+    private Button pauseButton;
     private Button stopButton;
     private TextView timerText;
     private CountDownTimer userTimer;
+    private boolean timerRunning = false;
+    private boolean paused = false;
     private long millisUntilFinished;
     private String formattedTime;
-    private boolean clicked = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,18 +52,20 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
 
         noPickerMin = root.findViewById(R.id.numberPickerMins); // numberpickers introduced
         noPickerSec = root.findViewById(R.id.numberPickerSecs);
-        pickedTimeSec = root.findViewById(R.id.pickedTimeSec); // these are for displaying the selected times
-        pickedTimeMin = root.findViewById(R.id.pickedTimeMin);
-        toggleGroup = root.findViewById(R.id.toggleButton);
-        startPauseButton = root.findViewById(R.id.startPauseButton); // pair the buttons
+        remainingTimeSec = root.findViewById(R.id.pickedTimeSec); // these are for displaying the selected and remaining time
+        remainingTimeMin = root.findViewById(R.id.pickedTimeMin);
+        toggleGroup = root.findViewById(R.id.toggleButton); // find toggle group
+        playButton = root.findViewById(R.id.playButton); // pair the buttons
+        pauseButton = root.findViewById(R.id.pauseButton);
         stopButton = root.findViewById(R.id.stopButton);
         timerText = root.findViewById(R.id.timerText);
         setMaxValuesSec();
         setMaxValuesMin();
-        noPickerSec.setOnValueChangedListener(this);
+        noPickerSec.setOnValueChangedListener(this); // set listeners
         noPickerMin.setOnValueChangedListener(this);
         toggleGroup.setOnClickListener(this);
-        startPauseButton.setOnClickListener(this);
+        playButton.setOnClickListener(this);
+        pauseButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         return root;
     }
@@ -98,13 +102,13 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
             case R.id.numberPickerSecs:
                 if (noPickerSec != null) {
                     secPicked = noPickerSec.getValue();
-                    pickedTimeSec.setText(String.valueOf(secPicked));
+                    remainingTimeSec.setText(String.valueOf(secPicked));
                 }
                 break;
             case R.id.numberPickerMins:
                 if (noPickerMin != null) {
                     minPicked = noPickerMin.getValue();
-                    pickedTimeMin.setText(String.valueOf(minPicked));
+                    remainingTimeMin.setText(String.valueOf(minPicked));
                 }
                 break;
         }
@@ -112,42 +116,63 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()) { // match id of toggled button in group inside switch case
             case R.id.toggleButton:
-            case R.id.startPauseButton:
+            case R.id.playButton:
+            case R.id.pauseButton:
             case R.id.stopButton:
                 int toggledButton = toggleGroup.getCheckedButtonId();
-                if (toggledButton == R.id.startPauseButton) {
-                    if(!clicked) {
-                        startPauseButton.setText(getString(R.string.pauseTimer));
-                        clicked = true;
+
+                if (toggledButton == R.id.playButton) {
+                    if (!timerRunning) {
                         startTimer();
-                    } else {
-                        startPauseButton.setText(getString(R.string.continueTimer));
-                        pauseTimer();
+                        timerRunning = true;
                     }
+                    break;
                 }
-                else {
-                    startPauseButton.setText(getString(R.string.startTimer));
+
+                if (toggledButton == R.id.pauseButton) {
+                    if(!paused) {
+                        paused = true;
+                        pauseTimer();
+                        break;
+                    }
+                    else {
+                        paused = false;
+                        startTimer();
+                    }
+                    break;
+                }
+
+                else { // if togglebutton is stop button
                     stopTimer();
+                    timerRunning = false;
                 }
                 break;
         }
     }
 
+    private Long findTimerValues(int minPicked, int secPicked) {
+        if(paused) {
+            int parsedMin = Integer.parseInt(remainingTimeMin.getText().toString());
+            int parsedSec = Integer.parseInt(remainingTimeSec.getText().toString());
+            return timePicked = parsedMin + parsedSec;
+        } else {
+            long lMinPicked = (long) minPicked * 60000; // minutes to milliseconds
+            long lSecPicked = (long) secPicked * 1000; // seconds to milliseconds
+            return timePicked = lMinPicked + lSecPicked;
+        }
+    }
+
     private void startTimer() {
-        long lMinPicked = (long) minPicked * 60000; // minutes to milliseconds
-        long lSecPicked = (long) secPicked * 1000; // seconds to milliseconds
-        timePicked = lMinPicked + lSecPicked;
-        userTimer = new CountDownTimer(timePicked, 1000) {
+        userTimer = new CountDownTimer(findTimerValues(minPicked, secPicked), 1000) {
             public void onTick(long millisUntilFinished) {
-                timerText.setVisibility(View.VISIBLE);
-                pickedTimeMin.setText(String.valueOf((millisUntilFinished/1000)/60));
-                pickedTimeSec.setText(String.valueOf((millisUntilFinished/1000)%60));
-                // timerText.setText(getString(R.string.timerRunning) + millisUntilFinished / 1000);
+                remainingTimeMin.setText(String.valueOf((millisUntilFinished/1000)/60));
+                remainingTimeSec.setText(String.valueOf((millisUntilFinished/1000)%60));
                 Log.e("TIMER", "TIMER TICKING");
             }
             public void onFinish() {
+                timerText.setVisibility(View.VISIBLE);
                 timerText.setText(getString(R.string.timerDone));
                 Log.e("TIMER", "TIMER FINISHED");
             }
@@ -164,8 +189,8 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         if (userTimer != null) {
             userTimer.cancel();
         }
-        pickedTimeSec.setText(getString(R.string.pickedTimeSec));
-        pickedTimeSec.setText(getString(R.string.pickedTimeMin));
+        remainingTimeSec.setText(getString(R.string.pickedTimeSec));
+        remainingTimeMin.setText(getString(R.string.pickedTimeMin));
     }
 
     private String formatTime(double time) {

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,10 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.testapplication.R;
 import com.google.android.material.button.MaterialButtonToggleGroup;
-
-import org.w3c.dom.Text;
-
-import java.util.function.IntToLongFunction;
 
 public class NotificationsFragment extends Fragment implements NumberPicker.OnValueChangeListener, View.OnClickListener {
     private TextClock textClock;
@@ -124,59 +119,42 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
                 int toggledButton = toggleGroup.getCheckedButtonId();
 
                 if (toggledButton == R.id.playButton) {
-                    if (!timerRunning) {
-                        startTimer();
-                        timerRunning = true;
-                    }
-                    break;
+                    startTimer();
                 }
 
-                if (toggledButton == R.id.pauseButton) {
-                    if(!paused) {
-                        paused = true;
-                        pauseTimer();
-                        break;
-                    }
-                    else {
-                        paused = false;
-                        startTimer();
-                    }
-                    break;
+                else if (toggledButton == R.id.pauseButton) {
+                    pauseTimer();
                 }
 
                 else { // if togglebutton is stop button
                     stopTimer();
-                    timerRunning = false;
                 }
                 break;
         }
     }
 
-    private Long findTimerValues(int minPicked, int secPicked) {
-        if(paused) {
-            int parsedMin = Integer.parseInt(remainingTimeMin.getText().toString());
-            int parsedSec = Integer.parseInt(remainingTimeSec.getText().toString());
-            return timePicked = parsedMin + parsedSec;
-        } else {
+    private Long milliSecondConverter(int minPicked, int secPicked) {
             long lMinPicked = (long) minPicked * 60000; // minutes to milliseconds
             long lSecPicked = (long) secPicked * 1000; // seconds to milliseconds
             return timePicked = lMinPicked + lSecPicked;
-        }
     }
 
     private void startTimer() {
-        userTimer = new CountDownTimer(findTimerValues(minPicked, secPicked), 1000) {
-            public void onTick(long millisUntilFinished) {
-                remainingTimeMin.setText(String.valueOf((millisUntilFinished/1000)/60));
-                remainingTimeSec.setText(String.valueOf((millisUntilFinished/1000)%60));
-                Log.e("TIMER", "TIMER TICKING");
-            }
-            public void onFinish() {
-                timerText.setVisibility(View.VISIBLE);
-                timerText.setText(getString(R.string.timerDone));
-                Log.e("TIMER", "TIMER FINISHED");
-            }
-        }.start();
+            userTimer = new CountDownTimer(milliSecondConverter(minPicked, secPicked), 1000) {
+                public void onTick(long millisUntilFinished) {
+                    minPicked = (int) millisUntilFinished /1000 / 60;
+                    secPicked = (int) (millisUntilFinished /1000) % 60;
+                    remainingTimeMin.setText(String.valueOf(minPicked));
+                    remainingTimeSec.setText(String.valueOf(secPicked));
+                    Log.e("TIMER", "TIMER TICKING");
+                }
+
+                public void onFinish() {
+                    timerText.setVisibility(View.VISIBLE);
+                    timerText.setText(getString(R.string.timerDone));
+                    Log.e("TIMER", "TIMER FINISHED");
+                }
+            }.start();
     }
 
     private void pauseTimer() {
@@ -188,9 +166,11 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
     private void stopTimer() {
         if (userTimer != null) {
             userTimer.cancel();
+            userTimer = null;
+            // nollaa ajat
+            remainingTimeSec.setText(getString(R.string.pickedTimeSec)); // set TextViews as zeroes
+            remainingTimeMin.setText(getString(R.string.pickedTimeMin));
         }
-        remainingTimeSec.setText(getString(R.string.pickedTimeSec));
-        remainingTimeMin.setText(getString(R.string.pickedTimeMin));
     }
 
     private String formatTime(double time) {

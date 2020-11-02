@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextClock;
@@ -35,8 +37,6 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
     private Button stopButton;
     private TextView timerText;
     private CountDownTimer userTimer;
-    private boolean timerRunning = false;
-    private boolean paused = false;
     private long millisUntilFinished;
     private String formattedTime;
 
@@ -62,6 +62,7 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         playButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
+
         return root;
     }
 
@@ -133,13 +134,15 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         }
     }
 
-    private Long milliSecondConverter(int minPicked, int secPicked) {
+    private Long milliSecondConverter(int minPicked, int secPicked) { // converts minutes and seconds into milliseconds to be used by the CountDownTimer
             long lMinPicked = (long) minPicked * 60000; // minutes to milliseconds
             long lSecPicked = (long) secPicked * 1000; // seconds to milliseconds
             return timePicked = lMinPicked + lSecPicked;
     }
 
     private void startTimer() {
+        final Animation timesUpAnimationFade = AnimationUtils.loadAnimation(getContext(), R.anim.fadeanimationend); // introduce fade animation
+        final Animation timesUpAnimationScale = AnimationUtils.loadAnimation(getContext(), R.anim.scaleupanimation); // introduce fade animation
             userTimer = new CountDownTimer(milliSecondConverter(minPicked, secPicked), 1000) {
                 public void onTick(long millisUntilFinished) {
                     minPicked = (int) millisUntilFinished /1000 / 60;
@@ -152,6 +155,7 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
                 public void onFinish() {
                     timerText.setVisibility(View.VISIBLE);
                     timerText.setText(getString(R.string.timerDone));
+                    timerText.startAnimation(timesUpAnimationFade);
                     Log.e("TIMER", "TIMER FINISHED");
                 }
             }.start();

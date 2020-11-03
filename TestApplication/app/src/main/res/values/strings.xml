@@ -12,8 +12,8 @@
     <string name="title_activity_bottom_navigation" translatable="false">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Location</string>
-    <string name="pickedTimeMin" translatable="false">0</string>
-    <string name="pickedTimeSec" translatable="false">0</string>
+    <string name="pickedTimeMin" translatable="false">00</string>
+    <string name="pickedTimeSec" translatable="false">00</string>
     <string name="divider" translatable="false"> : </string>
     <string name="dashboard_header">Your coordinates</string>
     <string name="title_notifications">Notifications</string>

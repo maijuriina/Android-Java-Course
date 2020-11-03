@@ -1,5 +1,8 @@
 package com.example.testapplication.ui.notifications;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.testapplication.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 public class NotificationsFragment extends Fragment implements NumberPicker.OnValueChangeListener, View.OnClickListener {
@@ -32,12 +36,11 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
     private int secPicked;
     private long timePicked;
     private MaterialButtonToggleGroup toggleGroup;
-    private Button playButton;
-    private Button pauseButton;
-    private Button stopButton;
+    private MaterialButton playButton;
+    private MaterialButton pauseButton;
+    private MaterialButton stopButton;
     private TextView timerText;
     private CountDownTimer userTimer;
-    private long millisUntilFinished;
     private String formattedTime;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,45 +69,45 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         return root;
     }
 
-    private void setMaxValuesSec() {
+    private void setMaxValuesSec() { // sets min and max-values for second numberpicker
         int i;
         if (noPickerSec != null) {
             noPickerSec.setMinValue(0);
             noPickerSec.setMaxValue(59);
             pickerValsSec = new String[60];
             for (i = 0; i < 60; i++) {
-                pickerValsSec[i] = i + " s";
+                pickerValsSec[i] = i + " s"; // add second's " s" to the end of i, e.g. 5 s
             }
             noPickerSec.setDisplayedValues(pickerValsSec);
         }
     }
 
-    private void setMaxValuesMin() {
+    private void setMaxValuesMin() { // sets min and max-values for minute numberpicker
         int i;
         if (noPickerMin != null) {
             noPickerMin.setMinValue(0);
             noPickerMin.setMaxValue(60);
             pickerValsMin = new String[61];
             for (i = 0; i < 61; i++) {
-                pickerValsMin[i] = i + " m";
+                pickerValsMin[i] = i + " m"; // add minute's " m" to the end of i, e.g. 5 m
             }
             noPickerMin.setDisplayedValues(pickerValsMin);
         }
     }
 
     @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) { // checks every value change on both sec and min numberpickers and sets it on counter
         switch (picker.getId()) {
             case R.id.numberPickerSecs:
                 if (noPickerSec != null) {
                     secPicked = noPickerSec.getValue();
-                    remainingTimeSec.setText(String.valueOf(secPicked));
+                    remainingTimeSec.setText(String.valueOf(formatTime(secPicked)));
                 }
                 break;
             case R.id.numberPickerMins:
                 if (noPickerMin != null) {
                     minPicked = noPickerMin.getValue();
-                    remainingTimeMin.setText(String.valueOf(minPicked));
+                    remainingTimeMin.setText(String.valueOf(formatTime(minPicked)));
                 }
                 break;
         }
@@ -127,7 +130,7 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
                     pauseTimer();
                 }
 
-                else { // if togglebutton is stop button
+                else { // if togglebutton == R.id.stopButton
                     stopTimer();
                 }
                 break;
@@ -141,22 +144,23 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
     }
 
     private void startTimer() {
-        final Animation timesUpAnimationFade = AnimationUtils.loadAnimation(getContext(), R.anim.fadeanimationend); // introduce fade animation
-        final Animation timesUpAnimationScale = AnimationUtils.loadAnimation(getContext(), R.anim.scaleupanimation); // introduce fade animation
             userTimer = new CountDownTimer(milliSecondConverter(minPicked, secPicked), 1000) {
                 public void onTick(long millisUntilFinished) {
                     minPicked = (int) millisUntilFinished /1000 / 60;
                     secPicked = (int) (millisUntilFinished /1000) % 60;
-                    remainingTimeMin.setText(String.valueOf(minPicked));
-                    remainingTimeSec.setText(String.valueOf(secPicked));
-                    Log.e("TIMER", "TIMER TICKING");
+                    remainingTimeMin.setText(String.valueOf(formatTime(minPicked))); // updates the TextView with the running times every second
+                    remainingTimeSec.setText(String.valueOf(formatTime(secPicked)));
                 }
 
                 public void onFinish() {
-                    timerText.setVisibility(View.VISIBLE);
-                    timerText.setText(getString(R.string.timerDone));
-                    timerText.startAnimation(timesUpAnimationFade);
-                    Log.e("TIMER", "TIMER FINISHED");
+                    try {
+                        timerFinishAnimate();
+                        playAlarm();
+                        resetAllValues(0, 0);
+                        playButton.setChecked(false); // reset play-button selection
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }.start();
     }
@@ -171,25 +175,36 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         if (userTimer != null) {
             userTimer.cancel();
             userTimer = null;
-            // nollaa ajat
-            remainingTimeSec.setText(getString(R.string.pickedTimeSec)); // set TextViews as zeroes
-            remainingTimeMin.setText(getString(R.string.pickedTimeMin));
+            resetAllValues(0, 0);
         }
     }
 
-    private String formatTime(double time) {
-        return formattedTime = '0' + String.valueOf(time);
+    private void resetAllValues(int valueSec, int valueMin) {
+        noPickerSec.setValue(valueSec); // set picker values back to given value
+        noPickerMin.setValue(valueMin);
+        remainingTimeSec.setText(getString(R.string.pickedTimeSec)); // set TextViews that count time down as zeroes
+        remainingTimeMin.setText(getString(R.string.pickedTimeMin));
     }
 
-    /*public void countDown() {
-        new CountDownTimer(30000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                timerText.setText("seconds remaining: " + millisUntilFinished / 1000);
-            }
+    private void timerFinishAnimate() {
+        Animation timesUpAnimationFade = AnimationUtils.loadAnimation(getContext(), R.anim.fadeanimationend); // introduce fade animation
+        timerText.setVisibility(View.VISIBLE);
+        timerText.setText(getString(R.string.timerDone));
+        timerText.startAnimation(timesUpAnimationFade);
+    }
 
-            public void onFinish() {
-                timerText.setText("done!");
-            }
-        }.start();
-    }*/
+    private void playAlarm() {
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION); // get notification ringtone ready for use
+        Ringtone r = RingtoneManager.getRingtone(getContext(), notification);
+        r.play();
+    }
+
+    // adds zeroes to all displays of less than 10 in time
+    private String formatTime(int time) {
+        if (time < 10) {
+            return formattedTime = '0' + String.valueOf(time);
+        } else {
+            return formattedTime = String.valueOf(time);
+        }
+    }
 }

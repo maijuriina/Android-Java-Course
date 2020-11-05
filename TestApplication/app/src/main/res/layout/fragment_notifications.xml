@@ -21,6 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--THIS IS FOR TESTING LAYOUT WITH A MOCKUP CLOCK TEXT AS TEXTCLOCK BREAKS THE PREVIEW -->
     <!--<TextView
         android:id="@+id/textClock"
         android:layout_width="wrap_content"

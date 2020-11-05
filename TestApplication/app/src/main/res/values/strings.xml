@@ -11,12 +11,12 @@
     <string name="highscoretext">High score: </string>
     <string name="title_activity_bottom_navigation" translatable="false">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Location</string>
+    <string name="title_location">Location</string>
     <string name="pickedTimeMin" translatable="false">00</string>
     <string name="pickedTimeSec" translatable="false">00</string>
     <string name="divider" translatable="false"> : </string>
     <string name="dashboard_header">Your coordinates</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_timer">Timer</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="address">Address</string>
@@ -31,4 +31,5 @@
     <string name="timerNotRunning">Timer not running</string>
     <string name="timerRunning">"Time remaining: "</string>
     <string name="timerDone">FINISHED!</string>
+    <string name="cannotTime">Set a time!</string>
 </resources>

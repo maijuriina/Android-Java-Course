@@ -29,4 +29,5 @@
     <string name="timerRunning">"Aikaa jäljellä: "</string>
     <string name="timerDone">AIKA LOPPU!</string>
     <string name="cannotTime">Aseta aika!</string>
+    <string name="title_company_search">Yrityshaku</string>
 </resources>

@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".CompanySearchActivity"/>
         <receiver
             android:name=".ApmReceiver"
             android:enabled="true"
@@ -31,6 +33,7 @@
         <activity
             android:name=".GameActivity"
             android:parentActivityName=".BottomNavigationActivity" />
+
     </application>
 
 </manifest>

@@ -33,5 +33,6 @@
     <string name="searchByName">Etsi nimellä</string>
     <string name="searchDescription">Hae yrityksiä \nYTJ:n yritys- ja yhdistystietokannasta</string>
     <string name="searchButton">Hae!</string>
+    <string name="inputMissing">Hakutermi puuttuu!</string>
     <string name="searching">Haetaan..</string>
 </resources>

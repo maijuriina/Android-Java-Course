@@ -37,4 +37,5 @@
     <string name="searchByName">Search by name</string>
     <string name="searchButton">Search!</string>
     <string name="searching">Searching..</string>
+    <string name="inputMissing">Search term missing!</string>
 </resources>

@@ -30,8 +30,7 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity" />
+            android:parentActivityName=".BottomNavigationActivity" />
     </application>
 
 </manifest>

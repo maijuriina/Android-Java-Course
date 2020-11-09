@@ -17,7 +17,7 @@
         android:title="@string/title_timer" />
 
     <item
-        android:id="@+id/navigation_company_search"
+        android:id="@+id/navigation_search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/title_company_search" />
 </menu>

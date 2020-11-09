@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.example.testapplication.ui.search.SearchFragment"
-        android:label="search_fragment"
+        android:label="@string/title_company_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

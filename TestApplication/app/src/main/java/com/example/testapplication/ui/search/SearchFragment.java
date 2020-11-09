@@ -32,11 +32,4 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        SearchViewModel searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

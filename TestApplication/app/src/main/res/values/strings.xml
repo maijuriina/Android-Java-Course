@@ -33,4 +33,8 @@
     <string name="timerDone">FINISHED!</string>
     <string name="cannotTime">Set a time!</string>
     <string name="title_company_search">Company search</string>
+    <string name="searchDescription">Search companies from\nthe YTJ company and association database</string>
+    <string name="searchByName">Search by name</string>
+    <string name="searchButton">Search!</string>
+    <string name="searching">Searching..</string>
 </resources>

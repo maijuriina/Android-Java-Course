@@ -30,4 +30,8 @@
     <string name="timerDone">AIKA LOPPU!</string>
     <string name="cannotTime">Aseta aika!</string>
     <string name="title_company_search">Yrityshaku</string>
+    <string name="searchByName">Etsi nimellä</string>
+    <string name="searchDescription">Hae yrityksiä \nYTJ:n yritys- ja yhdistystietokannasta</string>
+    <string name="searchButton">Hae!</string>
+    <string name="searching">Haetaan..</string>
 </resources>

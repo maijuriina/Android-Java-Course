@@ -38,4 +38,7 @@
     <string name="searchButton">Search!</string>
     <string name="searching">Searching..</string>
     <string name="inputMissing">Search term missing!</string>
+    <string name="resultsFound">Total results</string>
+    <string name="totalResults" translatable="false"/>
+    <string name="forTheWord">for search term </string>
 </resources>

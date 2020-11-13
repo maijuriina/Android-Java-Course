@@ -35,4 +35,6 @@
     <string name="searchButton">Hae!</string>
     <string name="inputMissing">Hakutermi puuttuu!</string>
     <string name="searching">Haetaan..</string>
+    <string name="resultsFound">Hakutulokset</string>
+    <string name="forTheWord">hakusanalle </string>
 </resources>

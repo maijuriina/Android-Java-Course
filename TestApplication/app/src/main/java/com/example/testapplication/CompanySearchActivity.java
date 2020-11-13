@@ -6,29 +6,43 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CompanySearchActivity extends AppCompatActivity {
     private TextView receivedTerm;
+    private TextView foundResults;
+    private ProgressBar loadingIcon;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
-    Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // Instantiate the cache; 1MB cap
-    Network network = new BasicNetwork(new HurlStack()); // Set up the network to use HttpURLConnection as the HTTP client
-    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=false&maxResults=100&resultsFrom=0&name=Lappeenrannan&companyRegistrationFrom=1900-02-28";
+    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=Lappeenrannan&companyRegistrationFrom=1900-02-28";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_search);
-
+        foundResults = findViewById(R.id.foundResults);
+        loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
         findSearchTerm();
+        startTheQueue();
     }
 
     private void findSearchTerm() {
@@ -38,13 +52,47 @@ public class CompanySearchActivity extends AppCompatActivity {
         String terms = extras.getString("searchTerms");
         if (terms != null) {
             Log.e("OSAAAAAAAAAA", terms);
-            receivedTerm.setText(terms);
+            receivedTerm.setText("'" + terms + "'");
         }
     }
 
     private void startTheQueue() {
-        requestQueue = new RequestQueue(cache, network); // Instantiate the RequestQueue with the cache and network
-        requestQueue.start(); // Start the queue
+        loadingIcon.setVisibility(View.VISIBLE);
+        requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray myArray = response.getJSONArray("results");
+                    int total = response.getInt("totalResults");
+                    foundResults.setText(String.valueOf(total));
+                    Log.e("JSONHAKU", String.valueOf(total));
+                    for (int i = 0; i < myArray.length(); i++) {
+                        JSONObject currentJsonObject = myArray.getJSONObject(i);
+                        String businessId = currentJsonObject.getString("businessId");
+                        String name = currentJsonObject.getString("name");
+                        String registrationDate = currentJsonObject.getString("registrationDate");
+                        String companyForm = currentJsonObject.getString("companyForm");
+                        Log.i("JSONHAKU", businessId);
+                        Log.i("JSONHAKU", name);
+                        Log.i("JSONHAKU", registrationDate);
+                        Log.i("JSONHAKU", companyForm);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                loadingIcon.setVisibility(View.INVISIBLE);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonObjectRequest); // Start the queue
     }
 
 }

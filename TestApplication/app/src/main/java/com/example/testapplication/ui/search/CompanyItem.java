@@ -30,4 +30,7 @@ public class CompanyItem { // class for the company JSON-data that is returned f
         return companyForm;
     }
 
+    /*public String getPosition() {
+        return position;
+    }*/
 }

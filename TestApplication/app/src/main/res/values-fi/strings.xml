@@ -37,4 +37,8 @@
     <string name="searching">Haetaan..</string>
     <string name="resultsFound">Hakutulokset</string>
     <string name="forTheWord">hakusanalle </string>
+    <string name="uiCompanyId">companyId</string>
+    <string name="uiCompanyName">companyName</string>
+    <string name="uiCompanyRegistrationDate">companyDate</string>
+    <string name="uiCompanyType">companyType</string>
 </resources>

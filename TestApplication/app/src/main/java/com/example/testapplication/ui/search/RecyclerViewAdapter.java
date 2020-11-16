@@ -1,6 +1,7 @@
 package com.example.testapplication.ui.search;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context context;
     private List<CompanyItem> mCompanyList;
     private AdapterView.OnItemClickListener mOnItemClickListener;
+    // private JSONObject[] localDataSet;
 
     // provide a reference to the type of views that you are using (custom ViewHolder)
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -38,38 +40,43 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View v) {
-            mAdapter.mOnItemHolderClick(this);
+            mAdapter.onItemHolderClick(this);
         }
     }
 
-    private void mOnItemHolderClick(ViewHolder viewHolder) {
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
+
+    private void onItemHolderClick(ViewHolder itemHolder) {
         if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(null, viewHolder.itemView, viewHolder.getAdapterPosition(), viewHolder.getItemId());
+            mOnItemClickListener.onItemClick(null, itemHolder.itemView, itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
     }
 
-    public RecyclerViewAdapter(Context context, List<CompanyItem> mCompanyList) {
-        this.context = context;
+    public RecyclerViewAdapter(List<CompanyItem> mCompanyList) {
+
         this.mCompanyList = mCompanyList;
     }
 
     // this creates new views invoked by the layout manager
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         // creates a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.company_item, parent, false);
-        return new ViewHolder(view, this);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.company_item, parent, false);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         // Get elements from your data at this position and replace the contents of the view with that element
         CompanyItem items = mCompanyList.get(position);
-        holder.mCompanyId.setText(items.getId());
-        holder.mCompanyName.setText(items.getCompanyName());
-        holder.mCompanyRegistrationDate.setText(items.getDateOfRegistration());
-        holder.mCompanyForm.setText(items.getCompanyForm());
+        holder.mCompanyId.setText(String.valueOf(items.getId()));
+        holder.mCompanyName.setText(String.valueOf(items.getCompanyName()));
+        holder.mCompanyRegistrationDate.setText(String.valueOf(items.getDateOfRegistration()));
+        holder.mCompanyForm.setText(String.valueOf(items.getCompanyForm()));
     }
 
     @Override

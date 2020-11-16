@@ -1,6 +1,7 @@
 package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,9 +40,7 @@ public class CompanySearchActivity extends AppCompatActivity {
     private TextView receivedTerm;
     private TextView foundResults;
     private ProgressBar loadingIcon;
-    private RecyclerView mRecyclerView;
-    private RecyclerViewAdapter mAdapter;
-    private ArrayList<CompanyItem> myDataSet = new ArrayList<>();
+    public ArrayList<CompanyItem> myDataSet = new ArrayList<>();
     RequestQueue requestQueue; // declare requestQueue to be used by volley
     String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
@@ -52,11 +52,19 @@ public class CompanySearchActivity extends AppCompatActivity {
         foundResults = findViewById(R.id.foundResults);
         loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
-        mRecyclerView = (RecyclerView) findViewById(R.id.companyList); // introduce view that will contain listed cards
-        mAdapter = new RecyclerViewAdapter(this, myDataSet); // specify an adapter to be used by data and set it
-        mRecyclerView.setAdapter(mAdapter);
         findSearchTerm();
         buildUrl();
+        RecyclerView mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Log.e("ONITEMCLICK", myDataSet.get(position).getPosition());
+            }
+        });
         startTheQueue();
     }
 
@@ -106,7 +114,7 @@ public class CompanySearchActivity extends AppCompatActivity {
                         String registrationDate = currentJsonObject.getString("registrationDate");
                         String companyForm = currentJsonObject.getString("companyForm");
                         myDataSet.add(new CompanyItem(businessId, name, registrationDate, companyForm)); // add to myDataSet
-                        Log.e("MYDATASET", myDataSet.toString());
+                        Log.e("MYDATASET", String.valueOf(myDataSet));
                         Log.i("JSONHAKU", businessId);
                         Log.i("JSONHAKU", name);
                         Log.i("JSONHAKU", registrationDate);

@@ -41,4 +41,8 @@
     <string name="resultsFound">Total results</string>
     <string name="totalResults" translatable="false"/>
     <string name="forTheWord">for search term </string>
+    <string name="uiCompanyId">companyId</string>
+    <string name="uiCompanyName">companyName</string>
+    <string name="uiCompanyRegistrationDate">companyDate</string>
+    <string name="uiCompanyType">companyType</string>
 </resources>

@@ -27,12 +27,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CompanySearchActivity extends AppCompatActivity {
     private TextView receivedTerm;
     private TextView foundResults;
     private ProgressBar loadingIcon;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
-    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=Lappeenrannan&companyRegistrationFrom=1900-02-28";
+    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
+    String terms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class CompanySearchActivity extends AppCompatActivity {
         loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
         findSearchTerm();
+        buildUrl();
         startTheQueue();
     }
 
@@ -49,17 +54,34 @@ public class CompanySearchActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Log.e("OSAAAAAAAAAA", String.valueOf(extras));
         if (extras == null) return;
-        String terms = extras.getString("searchTerms");
+        terms = extras.getString("searchTerms");
         if (terms != null) {
             Log.e("OSAAAAAAAAAA", terms);
             receivedTerm.setText("'" + terms + "'");
         }
     }
 
+    private int findIndex() {
+        int endingIndex;
+        String wordToFind = "name=";
+        Pattern word = Pattern.compile(wordToFind);
+        Matcher match = word.matcher(url);
+        while (match.find()) {
+            endingIndex = match.end();
+            Log.e("INDEXIIIIIIII", String.valueOf(endingIndex));
+            return endingIndex;
+        }
+        return 0;
+    }
+
+    private String buildUrl() {
+        return new StringBuilder(url).insert(findIndex(), terms).toString();
+    }
+
     private void startTheQueue() {
         loadingIcon.setVisibility(View.VISIBLE);
         requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, buildUrl(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

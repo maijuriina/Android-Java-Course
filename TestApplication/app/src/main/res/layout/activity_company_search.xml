@@ -49,7 +49,7 @@
             android:id="@+id/forDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="7dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/forTheWord"
@@ -65,7 +65,7 @@
             android:id="@+id/searchTerm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
             android:text="Company Search Activity"
             android:textColor="@color/colorAccent"
@@ -76,6 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/totalResults" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/companyList"
             android:layout_width="409dp"
             android:layout_height="615dp"
             android:layout_marginTop="1dp"

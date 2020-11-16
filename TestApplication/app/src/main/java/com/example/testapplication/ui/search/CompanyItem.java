@@ -14,4 +14,20 @@ public class CompanyItem { // class for the company JSON-data that is returned f
         this.companyForm = companyForm;
     }
 
+    public String getId() {
+        return companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public String getCompanyForm() {
+        return companyForm;
+    }
+
 }

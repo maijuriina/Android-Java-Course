@@ -1,6 +1,7 @@
 package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -22,11 +23,14 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.testapplication.ui.search.CompanyItem;
+import com.example.testapplication.ui.search.RecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +38,9 @@ public class CompanySearchActivity extends AppCompatActivity {
     private TextView receivedTerm;
     private TextView foundResults;
     private ProgressBar loadingIcon;
+    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mAdapter;
+    private ArrayList<CompanyItem> myDataSet = new ArrayList<>();
     RequestQueue requestQueue; // declare requestQueue to be used by volley
     String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
@@ -45,6 +52,9 @@ public class CompanySearchActivity extends AppCompatActivity {
         foundResults = findViewById(R.id.foundResults);
         loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
+        mRecyclerView = (RecyclerView) findViewById(R.id.companyList); // introduce view that will contain listed cards
+        mAdapter = new RecyclerViewAdapter(this, myDataSet); // specify an adapter to be used by data and set it
+        mRecyclerView.setAdapter(mAdapter);
         findSearchTerm();
         buildUrl();
         startTheQueue();
@@ -91,10 +101,12 @@ public class CompanySearchActivity extends AppCompatActivity {
                     Log.e("JSONHAKU", String.valueOf(total));
                     for (int i = 0; i < myArray.length(); i++) {
                         JSONObject currentJsonObject = myArray.getJSONObject(i);
-                        String businessId = currentJsonObject.getString("businessId");
+                        String businessId = currentJsonObject.getString("businessId"); // get the data in question from JSON with its name tag and bind into variable
                         String name = currentJsonObject.getString("name");
                         String registrationDate = currentJsonObject.getString("registrationDate");
                         String companyForm = currentJsonObject.getString("companyForm");
+                        myDataSet.add(new CompanyItem(businessId, name, registrationDate, companyForm)); // add to myDataSet
+                        Log.e("MYDATASET", myDataSet.toString());
                         Log.i("JSONHAKU", businessId);
                         Log.i("JSONHAKU", name);
                         Log.i("JSONHAKU", registrationDate);

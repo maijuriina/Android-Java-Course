@@ -15,17 +15,17 @@ import com.example.testapplication.R;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private Context context;
-    private List<CompanyItem> mCompanyList;
+    private ArrayList<CompanyItem> mCompanyList;
     private AdapterView.OnItemClickListener mOnItemClickListener;
     // private JSONObject[] localDataSet;
 
     // provide a reference to the type of views that you are using (custom ViewHolder)
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mCompanyId, mCompanyName, mCompanyRegistrationDate, mCompanyForm;
+        public TextView mCompanyId, mCompanyName, mCompanyRegistrationDate, mCompanyForm; // values the JSON-file has
         public RecyclerViewAdapter mAdapter;
 
         public ViewHolder (@NonNull View itemView, RecyclerViewAdapter mAdapter) {
@@ -55,9 +55,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(List<CompanyItem> mCompanyList) {
-
+    public RecyclerViewAdapter(ArrayList<CompanyItem> mCompanyList) {
         this.mCompanyList = mCompanyList;
+        Log.e("LISTSIZE", String.valueOf(mCompanyList.size()));
     }
 
     // this creates new views invoked by the layout manager
@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         // creates a new view, which defines the UI of the list item
-        View itemView = LayoutInflater.from(context).inflate(R.layout.company_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.company_item, parent, false);
         return new ViewHolder(itemView, this);
     }
 

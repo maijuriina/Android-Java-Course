@@ -41,6 +41,7 @@ public class CompanySearchActivity extends AppCompatActivity {
     private TextView foundResults;
     private ProgressBar loadingIcon;
     public ArrayList<CompanyItem> myDataSet = new ArrayList<>();
+    RecyclerView mRecyclerView;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
     String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
@@ -54,17 +55,9 @@ public class CompanySearchActivity extends AppCompatActivity {
         receivedTerm = findViewById(R.id.searchTerm);
         findSearchTerm();
         buildUrl();
-        RecyclerView mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
+        mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
         mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Log.e("ONITEMCLICK", myDataSet.get(position).getPosition());
-            }
-        });
         startTheQueue();
     }
 
@@ -124,6 +117,9 @@ public class CompanySearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 loadingIcon.setVisibility(View.INVISIBLE);
+                RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mAdapter);
             }
         },
                 new Response.ErrorListener() {

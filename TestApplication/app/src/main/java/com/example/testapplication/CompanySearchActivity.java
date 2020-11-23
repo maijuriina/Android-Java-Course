@@ -8,6 +8,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
@@ -43,7 +45,7 @@ public class CompanySearchActivity extends AppCompatActivity {
     public ArrayList<CompanyItem> myDataSet = new ArrayList<>();
     RecyclerView mRecyclerView;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
-    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=20&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
+    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=50&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
 
     @Override
@@ -131,6 +133,15 @@ public class CompanySearchActivity extends AppCompatActivity {
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest); // Start the queue
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) { // to inflate the search bar xml when moving to adapter view
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        return true;
     }
 
 }

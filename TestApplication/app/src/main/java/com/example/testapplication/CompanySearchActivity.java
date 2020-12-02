@@ -5,14 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -45,7 +50,8 @@ public class CompanySearchActivity extends AppCompatActivity {
     public ArrayList<CompanyItem> myDataSet = new ArrayList<>();
     RecyclerView mRecyclerView;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
-    String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=50&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
+    RecyclerViewAdapter mAdapter;
+    private String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=30&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
 
     @Override
@@ -65,18 +71,18 @@ public class CompanySearchActivity extends AppCompatActivity {
 
     private void findSearchTerm() {
         Bundle extras = getIntent().getExtras();
-        Log.e("OSAAAAAAAAAA", String.valueOf(extras));
+        Log.e("SEARCH TERM", String.valueOf(extras));
         if (extras == null) return;
         terms = extras.getString("searchTerms");
         if (terms != null) {
-            Log.e("OSAAAAAAAAAA", terms);
+            Log.e("SEARCH TERM", terms);
             receivedTerm.setText("'" + terms + "'");
         }
     }
 
-    private int findIndex() {
+    private int findIndex(String wordToFind) {
         int endingIndex;
-        String wordToFind = "name=";
+        // wordToFind = "name=";
         Pattern word = Pattern.compile(wordToFind);
         Matcher match = word.matcher(url);
         while (match.find()) {
@@ -88,51 +94,49 @@ public class CompanySearchActivity extends AppCompatActivity {
     }
 
     private String buildUrl() {
-        return new StringBuilder(url).insert(findIndex(), terms).toString();
+        return new StringBuilder(url).insert(findIndex("name="), terms).toString();
     }
 
     private void startTheQueue() {
-        loadingIcon.setVisibility(View.VISIBLE);
-        requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, buildUrl(), null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray myArray = response.getJSONArray("results");
-                    int total = response.getInt("totalResults");
-                    foundResults.setText(String.valueOf(total));
-                    Log.e("JSONHAKU", String.valueOf(total));
-                    for (int i = 0; i < myArray.length(); i++) {
-                        JSONObject currentJsonObject = myArray.getJSONObject(i);
-                        String businessId = currentJsonObject.getString("businessId"); // get the data in question from JSON with its name tag and bind into variable
-                        String name = currentJsonObject.getString("name");
-                        String registrationDate = currentJsonObject.getString("registrationDate");
-                        String companyForm = currentJsonObject.getString("companyForm");
-                        myDataSet.add(new CompanyItem(businessId, name, registrationDate, companyForm)); // add to myDataSet
-                        Log.e("MYDATASET", String.valueOf(myDataSet));
-                        Log.i("JSONHAKU", businessId);
-                        Log.i("JSONHAKU", name);
-                        Log.i("JSONHAKU", registrationDate);
-                        Log.i("JSONHAKU", companyForm);
+        if(findIndex("name=&") != 0) {
+            loadingIcon.setVisibility(View.VISIBLE);
+            Log.e("URLI: ", url);
+            requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, buildUrl(), null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray myArray = response.getJSONArray("results");
+                        int total = response.getInt("totalResults");
+                        foundResults.setText(String.valueOf(total));
+                        Log.e("JSONHAKU", String.valueOf(total));
+                        for (int i = 0; i < myArray.length(); i++) {
+                            JSONObject currentJsonObject = myArray.getJSONObject(i);
+                            String businessId = currentJsonObject.getString("businessId"); // get the data in question from JSON with its name tag and bind into variable
+                            String name = currentJsonObject.getString("name");
+                            String registrationDate = currentJsonObject.getString("registrationDate");
+                            String companyForm = currentJsonObject.getString("companyForm");
+                            myDataSet.add(new CompanyItem(businessId, name, registrationDate, companyForm)); // add to myDataSet
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    loadingIcon.setVisibility(View.INVISIBLE);
+                    mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
+                    mAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(mAdapter);
                 }
-                loadingIcon.setVisibility(View.INVISIBLE);
-                RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
+            },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    });
 
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(jsonObjectRequest); // Start the queue
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest); // Start the queue
+        }
     }
 
 
@@ -141,7 +145,40 @@ public class CompanySearchActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName())); // SearchableInfo object is created in searchable xml --> associate --> starts activity with ACTION_SEARCH intent when query is submitted
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mAdapter.getFilter().filter(query);
+                Log.e("ETSITÄÄN: ", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                mAdapter.getFilter().filter(query);
+                Log.e("ETSITÄÄN: ", query);
+                return false;
+            }
+        });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.search) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

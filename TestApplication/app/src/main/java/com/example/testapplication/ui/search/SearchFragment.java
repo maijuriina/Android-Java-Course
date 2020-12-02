@@ -44,10 +44,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.searchButton:
                 String terms = searchCompany.getText().toString();
-                Intent intent = new Intent(getActivity(), CompanySearchActivity.class);
-                intent.putExtra("searchTerms", terms);
-                startActivity(intent);
-                // Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
+                if (terms.isEmpty()) {
+                    Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getActivity(), CompanySearchActivity.class);
+                    intent.putExtra("searchTerms", terms);
+                    startActivity(intent);
+                }
         }
     }
 

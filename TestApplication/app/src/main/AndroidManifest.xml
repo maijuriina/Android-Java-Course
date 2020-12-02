@@ -16,11 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".CompanySearchActivity">
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+
+        <activity android:name=".CompanySearchActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
         </activity>
+
         <receiver
             android:name=".ApmReceiver"
             android:enabled="true"
@@ -36,7 +41,6 @@
         <activity
             android:name=".GameActivity"
             android:parentActivityName=".BottomNavigationActivity" />
-
     </application>
 
 </manifest>

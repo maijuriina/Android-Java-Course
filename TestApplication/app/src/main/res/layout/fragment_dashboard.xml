@@ -56,6 +56,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             app:helperText="@string/latitude"
+            app:layout_constraintBottom_toTopOf="@+id/flow2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +65,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/latitude"
+                android:clickable="false"
                 android:focusable="false"
-                android:clickable="false"/>
+                android:hint="@string/latitude" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

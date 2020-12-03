@@ -1,17 +1,22 @@
 package com.example.testapplication.ui.search;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapplication.R;
@@ -21,13 +26,14 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     private ArrayList<CompanyItem> mCompanyList;
     private ArrayList<CompanyItem> mCompanyListFiltered;
+    private ArrayList<CompanyItem> mFullList;
     private AdapterView.OnItemClickListener mOnItemClickListener;
+    private boolean clicked = false;
 
     // provide a reference to the type of views that you are using (custom ViewHolder)
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mCompanyId, mCompanyName, mCompanyRegistrationDate, mCompanyForm; // values the JSON-file has
         public RecyclerViewAdapter mAdapter;
-        private Context context;
 
         public ViewHolder (@NonNull View itemView, RecyclerViewAdapter mAdapter) {
             super(itemView);
@@ -42,6 +48,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View v) {
             mAdapter.onItemHolderClick(this);
+            if (!clicked) {
+                clicked = true;
+                mCompanyId.setVisibility(View.GONE);
+                mCompanyRegistrationDate.setVisibility(View.GONE);
+                mCompanyForm.setVisibility(View.GONE);
+            } else {
+                clicked = false;
+                mCompanyId.setVisibility(View.VISIBLE);
+                mCompanyRegistrationDate.setVisibility(View.VISIBLE);
+                mCompanyForm.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -51,11 +68,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString(); // convert search to string
+                Log.e("CHARSTRING", charString);
                 if (charString.isEmpty()) {
-                    mCompanyListFiltered = mCompanyList; // if no search active, display unfiltered list
+                    mCompanyListFiltered = mFullList; // if no search active, display unfiltered list
                 } else {
                     ArrayList<CompanyItem> filteredList = new ArrayList<>(); // make a temporary arrayList for storing
-                    for (CompanyItem company : mCompanyList) { // for each company in mCompanyList
+                    for (CompanyItem company : mFullList) { // for each company in mCompanyList
                         if (company.getCompanyName().toLowerCase().contains(charString.toLowerCase())) { // if the company's name contains the search criteria, then...
                             filteredList.add(company);
                         }
@@ -78,9 +96,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         };
     }
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.mOnItemClickListener = onItemClickListener;
-    }
+    // public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+      //  this.mOnItemClickListener = onItemClickListener;
+    //}
 
 
     private void onItemHolderClick(ViewHolder itemHolder) {
@@ -91,6 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public RecyclerViewAdapter(ArrayList<CompanyItem> mCompanyList) {
         this.mCompanyList = mCompanyList;
+        this.mFullList = mCompanyList;
     }
 
     // this creates new views invoked by the layout manager

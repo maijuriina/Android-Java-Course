@@ -56,11 +56,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             app:helperText="@string/latitude"
-            app:layout_constraintBottom_toTopOf="@+id/flow2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            tools:layout_editor_absoluteX="31dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -75,18 +71,15 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             app:helperText="@string/longitude"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="95dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/longitude"
+                android:clickable="false"
                 android:focusable="false"
-                android:clickable="false"/>
+                android:hint="@string/longitude" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -102,10 +95,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/addressMissing"
-                android:focusable="false"
                 android:clickable="false"
-                android:textSize="14sp"/>
+                android:focusable="false"
+                android:hint="@string/addressMissing"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

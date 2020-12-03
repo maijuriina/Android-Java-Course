@@ -1,6 +1,7 @@
 package com.example.testapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,8 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
+// import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -51,6 +53,9 @@ public class CompanySearchActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
     RecyclerViewAdapter mAdapter;
+    public ImageView noResultsIcon;
+    public String noResultsText;
+    public TextView noResultsTextView;
     private String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=30&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
 
@@ -61,6 +66,9 @@ public class CompanySearchActivity extends AppCompatActivity {
         foundResults = findViewById(R.id.foundResults);
         loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
+        noResultsIcon = findViewById(R.id.noResults);
+        noResultsText = getResources().getString(R.string.noResults);
+        noResultsTextView = findViewById(R.id.noResultsTextView);
         findSearchTerm();
         buildUrl();
         mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
@@ -98,7 +106,7 @@ public class CompanySearchActivity extends AppCompatActivity {
     }
 
     private void startTheQueue() {
-        if(findIndex("name=&") != 0) {
+        if(findIndex("name=&") != 0) {  // löytää indeksin
             loadingIcon.setVisibility(View.VISIBLE);
             Log.e("URLI: ", url);
             requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
@@ -130,6 +138,10 @@ public class CompanySearchActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            loadingIcon.setVisibility(View.INVISIBLE);
+                            noResultsTextView.setText(noResultsText);
+                            noResultsTextView.setVisibility(View.VISIBLE);
+                            noResultsIcon.setVisibility(View.VISIBLE);
                             error.printStackTrace();
                         }
                     });
@@ -158,14 +170,12 @@ public class CompanySearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mAdapter.getFilter().filter(query);
-                Log.e("ETSITÄÄN: ", query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 mAdapter.getFilter().filter(query);
-                Log.e("ETSITÄÄN: ", query);
                 return false;
             }
         });

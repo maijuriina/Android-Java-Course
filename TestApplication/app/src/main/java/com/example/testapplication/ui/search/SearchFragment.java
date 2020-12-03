@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         searchCompany = root.findViewById(R.id.searchField); // pair corresponding xml elements
         searchButton = root.findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(this);
+        searchButton.setOnClickListener(this); // set click listener
 
         return root;
     }
@@ -44,11 +44,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.searchButton:
                 String terms = searchCompany.getText().toString();
-                if (terms.isEmpty()) {
+                if (terms.isEmpty()) { // check for empty search field, do not initiate intent unless there are terms
                     Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getActivity(), CompanySearchActivity.class);
-                    intent.putExtra("searchTerms", terms);
+                    Intent intent = new Intent(getActivity(), CompanySearchActivity.class); // create new intent
+                    intent.putExtra("searchTerms", terms); // give the intent the search terms  with key "searchTerms"
                     startActivity(intent);
                 }
         }

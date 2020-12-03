@@ -43,4 +43,5 @@
     <string name="uiCompanyType">companyType</string>
     <string name="searchTitle">Hae...</string>
     <string name="searchHint">Suodata nimellä</string>
+    <string name="noResults">Ei hakutuloksia</string>
 </resources>

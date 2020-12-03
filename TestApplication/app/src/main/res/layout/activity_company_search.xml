@@ -70,7 +70,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="1dp"
             android:fontFamily="sans-serif-light"
-            android:text="Company Search Activity"
+            android:text="@string/inputMissing"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/companyList"
@@ -101,5 +101,33 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/noResults"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/noResults"
+        android:src="@drawable/ic_baseline_sentiment_dissatisfied_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/noResultsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/noResults"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/indeterminateBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

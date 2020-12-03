@@ -1,19 +1,12 @@
 package com.example.testapplication.ui.search;
 
-import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,12 +26,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // provide a reference to the type of views that you are using (custom ViewHolder)
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mCompanyId, mCompanyName, mCompanyRegistrationDate, mCompanyForm; // values the JSON-file has
-        public RecyclerViewAdapter mAdapter;
+        public RecyclerViewAdapter mAdapter; // introduce mAdapter
 
         public ViewHolder (@NonNull View itemView, RecyclerViewAdapter mAdapter) {
             super(itemView);
-            this.mAdapter = mAdapter;
-            mCompanyId = (TextView) itemView.findViewById(R.id.uiCompanyId);
+            this.mAdapter = mAdapter; // constructor for adapter
+            mCompanyId = (TextView) itemView.findViewById(R.id.uiCompanyId); // pair with xml
             mCompanyName = (TextView) itemView.findViewById(R.id.uiCompanyName);
             mCompanyRegistrationDate = (TextView) itemView.findViewById(R.id.uiCompanyRegistrationDate);
             mCompanyForm = (TextView) itemView.findViewById(R.id.uiCompanyType);
@@ -48,16 +41,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View v) {
             mAdapter.onItemHolderClick(this);
-            if (!clicked) {
+            if (!clicked) { // following is for hiding and showing rest of info
                 clicked = true;
-                mCompanyId.setVisibility(View.GONE);
-                mCompanyRegistrationDate.setVisibility(View.GONE);
-                mCompanyForm.setVisibility(View.GONE);
-            } else {
-                clicked = false;
                 mCompanyId.setVisibility(View.VISIBLE);
                 mCompanyRegistrationDate.setVisibility(View.VISIBLE);
                 mCompanyForm.setVisibility(View.VISIBLE);
+
+            } else {
+                clicked = false;
+                mCompanyId.setVisibility(View.GONE);
+                mCompanyRegistrationDate.setVisibility(View.GONE);
+                mCompanyForm.setVisibility(View.GONE);
             }
         }
     }
@@ -96,18 +90,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         };
     }
 
-    // public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-      //  this.mOnItemClickListener = onItemClickListener;
-    //}
-
-
-    private void onItemHolderClick(ViewHolder itemHolder) {
+    private void onItemHolderClick(ViewHolder itemHolder) { // gets click of item and its position and id
         if (mOnItemClickListener != null) {
             mOnItemClickListener.onItemClick(null, itemHolder.itemView, itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
     }
 
-    public RecyclerViewAdapter(ArrayList<CompanyItem> mCompanyList) {
+    public RecyclerViewAdapter(ArrayList<CompanyItem> mCompanyList) { // constructor for setting values of lists
         this.mCompanyList = mCompanyList;
         this.mFullList = mCompanyList;
     }
@@ -132,7 +121,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount() { // get how many items are in list
         if (mCompanyList != null) {
             return mCompanyList.size();
         } else {
@@ -140,7 +129,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public long getItemId(int position) {
+    public long getItemId(int position) { // get the position of one item
         return position;
     }
 }

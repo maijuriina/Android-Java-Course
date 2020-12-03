@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         app:cardCornerRadius="4dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -25,19 +25,6 @@
             android:clickable="false"
             android:src="@android:drawable/arrow_down_float"
             app:tint="@color/colorPrimaryDark" />
-
-        <!--<Button
-            android:id="@+id/moreButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:clickable="false"
-            app:backgroundTint="#00FFFFFF"
-            app:elevation="2dp"
-            app:icon="@android:drawable/arrow_down_float"
-            app:iconGravity="end"
-            app:iconTint="@color/colorPrimary" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,9 +44,11 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-light"
+                android:includeFontPadding="false"
                 android:text="@string/uiCompanyName"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:autoSizeTextType="none" />
 
             <TextView
                 android:id="@+id/uiCompanyId"

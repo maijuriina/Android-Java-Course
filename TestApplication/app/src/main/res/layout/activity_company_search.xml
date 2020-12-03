@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/inputMissing"
             android:textColor="@color/colorAccent"
@@ -81,9 +81,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/companyList"
-            android:layout_width="409dp"
-            android:layout_height="615dp"
-            android:layout_marginTop="1dp"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="60dp"
+            android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

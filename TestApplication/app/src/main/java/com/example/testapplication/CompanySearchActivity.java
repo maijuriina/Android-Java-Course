@@ -5,33 +5,24 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.FragmentManager;
+
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-// import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.testapplication.ui.search.CompanyItem;
@@ -90,12 +81,10 @@ public class CompanySearchActivity extends AppCompatActivity {
 
     private int findIndex(String wordToFind) {
         int endingIndex;
-        // wordToFind = "name=";
         Pattern word = Pattern.compile(wordToFind);
         Matcher match = word.matcher(url);
-        while (match.find()) {
+        if (match.find()) {
             endingIndex = match.end();
-            Log.e("INDEXIIIIIIII", String.valueOf(endingIndex));
             return endingIndex;
         }
         return 0;
@@ -106,7 +95,8 @@ public class CompanySearchActivity extends AppCompatActivity {
     }
 
     private void startTheQueue() {
-        if(findIndex("name=&") != 0) {  // löytää indeksin
+        if(findIndex("name=&") != 0) {
+            // löytää indeksin
             loadingIcon.setVisibility(View.VISIBLE);
             Log.e("URLI: ", url);
             requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="sans-serif-light"
         android:text="@string/game_name"
         android:textColor="#9C27B0"
         android:textSize="30sp"
@@ -64,21 +64,24 @@
             android:layout_width="178dp"
             android:layout_height="232dp"
             app:srcCompat="@drawable/universe_cosmic_vacum_sq__800_800"
-            tools:layout_editor_absoluteX="69dp" />
+            tools:layout_editor_absoluteX="69dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="178dp"
             android:layout_height="232dp"
             app:srcCompat="@drawable/universe_cosmic_vacum_sq__800_800"
-            tools:layout_editor_absoluteX="310dp" />
+            tools:layout_editor_absoluteX="310dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="178dp"
             android:layout_height="232dp"
             app:srcCompat="@drawable/universe_cosmic_vacum_sq__800_800"
-            tools:layout_editor_absoluteY="247dp" />
+            tools:layout_editor_absoluteY="247dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/imageButton3"
@@ -86,7 +89,8 @@
             android:layout_height="232dp"
             app:srcCompat="@drawable/universe_cosmic_vacum_sq__800_800"
             tools:layout_editor_absoluteX="310dp"
-            tools:layout_editor_absoluteY="247dp" />
+            tools:layout_editor_absoluteY="247dp"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -106,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="sans-serif-light"
         android:text="@string/highscoretext"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -118,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="sans-serif-light"
         android:text=" "
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -146,7 +150,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="sans-serif-light"
         android:text=" "
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@id/viewScore"

@@ -1,4 +1,4 @@
-package com.example.testapplication;
+package com.example.testapplication.ui.dashboard;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

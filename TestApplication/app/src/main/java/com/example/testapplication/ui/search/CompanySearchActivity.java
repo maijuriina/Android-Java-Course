@@ -1,4 +1,4 @@
-package com.example.testapplication;
+package com.example.testapplication.ui.search;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.testapplication.R;
 import com.example.testapplication.ui.search.CompanyItem;
 import com.example.testapplication.ui.search.RecyclerViewAdapter;
 

@@ -74,8 +74,8 @@ public class CompanySearchActivity extends AppCompatActivity {
         if (extras == null) return;
         terms = extras.getString("searchTerms");
         if (terms != null) {
-            Log.e("SEARCH TERM", terms);
-            receivedTerm.setText("'" + terms + "'");
+        String beautifiedTerms = terms.replace("_", " ");
+        receivedTerm.setText("'" + beautifiedTerms + "'");
         }
     }
 

@@ -47,8 +47,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 if (terms.isEmpty()) { // check for empty search field, do not initiate intent unless there are terms
                     Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
                 } else {
+                    String moddedTerms = terms.replace(" ", "_");
                     Intent intent = new Intent(getActivity(), CompanySearchActivity.class); // create new intent
-                    intent.putExtra("searchTerms", terms); // give the intent the search terms  with key "searchTerms"
+                    intent.putExtra("searchTerms", moddedTerms); // give the intent the search terms  with key "searchTerms"
                     startActivity(intent);
                 }
         }

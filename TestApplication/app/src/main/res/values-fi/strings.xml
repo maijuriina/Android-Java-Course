@@ -7,6 +7,8 @@
     <string name="image_description">Kuva violetinsävyisestä galaksista</string>
     <string name="openGame">Pelaa Jännittävää Korttipeliä!</string>
     <string name="game_name">Jännittävä Korttipeli</string>
+    <string name="open_game_exam">Pelaa Jännittävää Arvauspeliä!</string>
+    <string name="game_name_exam">Arvaa AMK!</string>
     <string name="game_guide">Etsi maaginen kortti!</string>
     <string name="highscore"></string>
     <string name="highscoretext">Ennätys: </string>
@@ -44,4 +46,7 @@
     <string name="searchTitle">Hae...</string>
     <string name="searchHint">Suodata nimellä</string>
     <string name="noResults">Ei hakutuloksia</string>
+    <string name="showScore">Näytä tulos!</string>
+    <string name="correct">Oikein!</string>
+    <string name="totalScore">Tuloksesi oli</string>
 </resources>

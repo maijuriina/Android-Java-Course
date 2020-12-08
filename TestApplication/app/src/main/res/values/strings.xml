@@ -6,6 +6,8 @@
     <string name="hello_world">Hello World!</string>
     <string name="image_description">Image of a purple-hued galaxy</string>
     <string name="game_name">The Thrilling Card Game</string>
+    <string name="open_game_exam">Play the Thrilling Guessing Game!</string>
+    <string name="game_name_exam">Guess the University!</string>
     <string name="game_guide">Find the magic card!</string>
     <string name="highscore" translatable="false" />
     <string name="highscoretext">High score: </string>
@@ -48,4 +50,12 @@
     <string name="searchTitle">Search...</string>
     <string name="searchHint">Filter by name</string>
     <string name="noResults">No results</string>
+    <string name="XAMK" translatable="false">XAMK</string>
+    <string name="LAUREA" translatable="false">LAUREA</string>
+    <string name="LAB" translatable="false">LAB</string>
+    <string name="JAMK" translatable="false">JAMK</string>
+    <string name="TAMK" translatable="false">TAMK</string>
+    <string name="showScore">Show score!</string>
+    <string name="correct">Correct!</string>
+    <string name="totalScore">Your score was</string>
 </resources>

@@ -16,21 +16,17 @@ import com.example.testapplication.R;
 public class HomeFragment extends Fragment implements View.OnClickListener  {
 
     Button gameButton; // introduce game button
+    Button guessGameButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        /*final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
 
         gameButton = root.findViewById(R.id.gameButton);
+        guessGameButton = root.findViewById(R.id.guessButton);
         gameButton.setOnClickListener(this);
+        guessGameButton.setOnClickListener(this);
 
         return root;
     }
@@ -41,6 +37,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener  {
             case R.id.gameButton:
                 Intent intent = new Intent(getActivity(), GameActivity.class);
                 startActivity(intent);
+            case R.id.guessButton:
+                Intent guessIntent = new Intent(getActivity(), GuessActivity.class);
+                startActivity(guessIntent);
         }
     }
 }

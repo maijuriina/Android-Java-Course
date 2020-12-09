@@ -31,19 +31,25 @@ public class CompanyItem { // class for the company JSON-data that is returned f
         return companyForm;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
+// --Commented out by Inspection START (9.12.2020 11.39):
+//    public void setCompanyId(String companyId) {
+//        this.companyId = companyId;
+//    }
+// --Commented out by Inspection START (9.12.2020 11.39):
+//// --Commented out by Inspection STOP (9.12.2020 11.39)
+//
+//    public void setCompanyName(String companyName) {
+//        this.companyName = companyName;
+//    }
+//
+//    public void setDateOfRegistration(String dateOfRegistration) {
+// --Commented out by Inspection STOP (9.12.2020 11.39)
+        //this.dateOfRegistration = dateOfRegistration;
+    //}
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public void setDateOfRegistration(String dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
-    }
-
-    public void setCompanyForm(String companyForm) {
-        this.companyForm = companyForm;
-    }
+// --Commented out by Inspection START (9.12.2020 11.39):
+//    public void setCompanyForm(String companyForm) {
+//        this.companyForm = companyForm;
+//    }
+// --Commented out by Inspection STOP (9.12.2020 11.39)
 }

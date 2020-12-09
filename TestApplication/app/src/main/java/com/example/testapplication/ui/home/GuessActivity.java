@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.testapplication.R;
-import com.example.testapplication.ui.search.CompanySearchActivity;
 
 public class GuessActivity extends AppCompatActivity  implements View.OnClickListener {
     TextView xamk;
@@ -129,8 +127,7 @@ public class GuessActivity extends AppCompatActivity  implements View.OnClickLis
     }
 
     public int addUp() {
-        int finalScore = guessPoints;
-        return finalScore;
+        return guessPoints;
     }
 
     public void setVisibility() {

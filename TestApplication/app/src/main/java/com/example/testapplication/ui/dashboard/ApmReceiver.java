@@ -3,7 +3,6 @@ package com.example.testapplication.ui.dashboard;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,10 +14,8 @@ public class ApmReceiver extends BroadcastReceiver {
         boolean state = intent.getBooleanExtra("state", false);
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast
-        StringBuilder sb = new StringBuilder();
-        sb.append("Action: " + intent.getAction() + "\n");
-        sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
-        String log = sb.toString();
+        String log = "Action: " + intent.getAction() + "\n" +
+                "URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n";
         Log.d(TAG, log);
 
         if (state) {

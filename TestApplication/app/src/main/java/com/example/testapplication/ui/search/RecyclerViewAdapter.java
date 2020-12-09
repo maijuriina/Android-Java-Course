@@ -19,14 +19,17 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     private ArrayList<CompanyItem> mCompanyList;
     private ArrayList<CompanyItem> mCompanyListFiltered;
-    private ArrayList<CompanyItem> mFullList;
-    private AdapterView.OnItemClickListener mOnItemClickListener;
+    private final ArrayList<CompanyItem> mFullList;
+    AdapterView.OnItemClickListener mOnItemClickListener;
     private boolean clicked = false;
 
     // provide a reference to the type of views that you are using (custom ViewHolder)
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mCompanyId, mCompanyName, mCompanyRegistrationDate, mCompanyForm; // values the JSON-file has
-        public RecyclerViewAdapter mAdapter; // introduce mAdapter
+        public final TextView mCompanyId;
+        public final TextView mCompanyName;
+        public final TextView mCompanyRegistrationDate;
+        public final TextView mCompanyForm; // values the JSON-file has
+        public final RecyclerViewAdapter mAdapter; // introduce mAdapter
 
         public ViewHolder (@NonNull View itemView, RecyclerViewAdapter mAdapter) {
             super(itemView);

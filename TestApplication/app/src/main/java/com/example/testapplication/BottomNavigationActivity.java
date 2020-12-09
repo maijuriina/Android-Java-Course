@@ -15,7 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class BottomNavigationActivity extends AppCompatActivity {
-    BroadcastReceiver br = new ApmReceiver();
+    final BroadcastReceiver br = new ApmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

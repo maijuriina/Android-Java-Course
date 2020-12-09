@@ -20,7 +20,6 @@ import com.example.testapplication.R;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
     private EditText searchCompany; // introduce elements
-    private Button searchButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -29,7 +28,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
         searchCompany = root.findViewById(R.id.searchField); // pair corresponding xml elements
-        searchButton = root.findViewById(R.id.searchButton);
+        Button searchButton = root.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(this); // set click listener
 
         return root;
@@ -37,17 +36,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.searchButton:
-                String terms = searchCompany.getText().toString();
-                if (terms.isEmpty()) { // check for empty search field, do not initiate intent unless there are terms
-                    Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
-                } else {
-                    String moddedTerms = terms.replace(" ", "_");
-                    Intent intent = new Intent(getActivity(), CompanySearchActivity.class); // create new intent
-                    intent.putExtra("searchTerms", moddedTerms); // give the intent the search terms  with key "searchTerms"
-                    startActivity(intent);
-                }
+        if (v.getId() == R.id.searchButton) {
+            String terms = searchCompany.getText().toString();
+            if (terms.isEmpty()) { // check for empty search field, do not initiate intent unless there are terms
+                Toast.makeText(getContext(), getResources().getString(R.string.inputMissing), Toast.LENGTH_SHORT).show();
+            } else {
+                String moddedTerms = terms.replace(" ", "_");
+                Intent intent = new Intent(getActivity(), CompanySearchActivity.class); // create new intent
+                intent.putExtra("searchTerms", moddedTerms); // give the intent the search terms  with key "searchTerms"
+                startActivity(intent);
+            }
         }
     }
 

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.NumberPicker;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -134,7 +133,7 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
             long lMinPicked = (long) minPicked * 60000; // minutes to milliseconds
             long lSecPicked = (long) secPicked * 1000; // seconds to milliseconds
         long timePicked; // local variable for combination of values
-        return timePicked = lMinPicked + lSecPicked;
+        return lMinPicked + lSecPicked;
     }
 
     private void startTimer() {
@@ -153,7 +152,7 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
                     try {
                         timerAnimate(getString(R.string.timerDone)); // send timer done message to timerAnimate-function
                         playAlarm();
-                        resetAllValues(0, 0);
+                        resetAllValues();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -174,16 +173,16 @@ public class NotificationsFragment extends Fragment implements NumberPicker.OnVa
         if (userTimer != null) {
             userTimer.cancel();
             userTimer = null;
-            resetAllValues(0, 0);
+            resetAllValues();
         }
         stopButton.setChecked(false); // reset stop-button selection
     }
 
-    private void resetAllValues(int valueSec, int valueMin) {
-        noPickerSec.setValue(valueSec); // set picker values back to given value
-        noPickerMin.setValue(valueMin);
-        secPicked = valueSec; // set parameter values for userTimer to given value
-        minPicked = valueMin;
+    private void resetAllValues() {
+        noPickerSec.setValue(0); // set picker values back to given value
+        noPickerMin.setValue(0);
+        secPicked = 0; // set parameter values for userTimer to given value
+        minPicked = 0;
         remainingTimeSec.setText(getString(R.string.pickedTimeSec)); // set TextViews that count time down as zeroes
         remainingTimeMin.setText(getString(R.string.pickedTimeMin));
     }

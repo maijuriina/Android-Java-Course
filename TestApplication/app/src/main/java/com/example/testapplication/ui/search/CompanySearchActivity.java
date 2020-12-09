@@ -41,14 +41,14 @@ public class CompanySearchActivity extends AppCompatActivity {
     private TextView receivedTerm;
     private TextView foundResults;
     private ProgressBar loadingIcon;
-    public ArrayList<CompanyItem> myDataSet = new ArrayList<>();
+    public final ArrayList<CompanyItem> myDataSet = new ArrayList<>();
     RecyclerView mRecyclerView;
     RequestQueue requestQueue; // declare requestQueue to be used by volley
     RecyclerViewAdapter mAdapter;
     public ImageView noResultsIcon;
     public String noResultsText;
     public TextView noResultsTextView;
-    private String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=30&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
+    private final String url = "http://avoindata.prh.fi/bis/v1.fi.json/bis/v1?totalResults=true&maxResults=30&resultsFrom=0&name=&companyRegistrationFrom=1900-02-28";
     String terms;
 
     @Override

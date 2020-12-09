@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton[] cardButtons = new ImageButton[4]; // introduce array for imagebuttons
+    final ImageButton[] cardButtons = new ImageButton[4]; // introduce array for imagebuttons
     int[] shuffledCards; // introduction for storing the shuffled cards
     ImageButton imageButton; // introduction of general imagebutton
     FloatingActionButton floatingShuffle; // shuffle again button introduction
@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         floatingShuffle = (FloatingActionButton) findViewById(R.id.floatingShuffle); // connect to id
         floatingShuffle.setOnClickListener(this);
 
-        shuffledCards = newShuffle(currentScore); // cards are shuffled onCreate and saved to shuffledCards-array
+        shuffledCards = newShuffle(); // cards are shuffled onCreate and saved to shuffledCards-array
 
         TextView highScoreField = findViewById(R.id.highscore); // find highscore-field from xml
         highScoreField.setText(String.valueOf(checkHighScore()));
@@ -71,7 +71,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         highScoreField.setText(String.valueOf(checkHighScore())); // set highscore to xml
                     }
                     Log.e("Correct/False: ", "Correct!");
-                    shuffledCards = newShuffle(currentScore);} // pass current score to newShuffle
+                    shuffledCards = newShuffle();} // pass current score to newShuffle
                 else {
                     currentScore = 0;
                     setCurrentScore(currentScore);
@@ -91,7 +91,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         highScoreField.setText(String.valueOf(checkHighScore()));
                     }
                     Log.e("Correct/False: ", "Correct!");
-                    shuffledCards = newShuffle(currentScore);}
+                    shuffledCards = newShuffle();}
                 else {
                     currentScore = 0;
                     setCurrentScore(currentScore);
@@ -111,7 +111,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         highScoreField.setText(String.valueOf(checkHighScore()));
                     }
                     Log.e("Correct/False: ", "Correct!");
-                    shuffledCards = newShuffle(currentScore);}
+                    shuffledCards = newShuffle();}
                 else {
                     currentScore = 0;
                     setCurrentScore(currentScore);
@@ -131,7 +131,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         highScoreField.setText(String.valueOf(checkHighScore()));
                     }
                     Log.e("Correct/False: ", "Correct!");
-                    shuffledCards = newShuffle(currentScore);}
+                    shuffledCards = newShuffle();}
                 else {
                     currentScore = 0;
                     setCurrentScore(currentScore);
@@ -142,12 +142,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 currentScore = 0;
                 setCurrentScore(currentScore);
                 Log.e("test", "Shuffle button has been clicked!");
-                shuffledCards = newShuffle(currentScore);
+                shuffledCards = newShuffle();
                 break;
         }
     }
 
-    public void shuffleCards(int card[], int n) {
+    public void shuffleCards(int[] card, int n) {
         Random rnd = new Random(); // initiate random
         for (int i=0; i<n; i++) {
             int r = i + rnd.nextInt(4-i); // random continued until all are shuffled
@@ -158,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public int[] newShuffle(int currentScore) {
+    public int[] newShuffle() {
         Animation fadeAnimationReset = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeanimationreset); // set up alpha-reveal animations
 
         // loop through ImageButton cards and reset their alpha through animations

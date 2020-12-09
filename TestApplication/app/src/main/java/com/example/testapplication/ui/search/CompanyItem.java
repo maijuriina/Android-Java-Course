@@ -2,10 +2,10 @@ package com.example.testapplication.ui.search;
 
 public class CompanyItem { // class for the company JSON-data that is returned from the search url
 
-    private String companyId;
-    private String companyName;
-    private String dateOfRegistration;
-    private String companyForm;
+    private final String companyId;
+    private final String companyName;
+    private final String dateOfRegistration;
+    private final String companyForm;
 
     // constructor for the class attributes
     public CompanyItem(String companyId, String companyName, String dateOfRegistration, String companyForm) {

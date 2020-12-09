@@ -2,6 +2,7 @@ package com.example.testapplication.ui.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -29,6 +30,7 @@ public class GuessActivity extends AppCompatActivity  implements View.OnClickLis
     boolean clickedTamk = false;
     boolean clickedLab = false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +68,10 @@ public class GuessActivity extends AppCompatActivity  implements View.OnClickLis
 
         // makes the seekbar not greyed out, even though is not changeable
         seekBar.setOnTouchListener(new View.OnTouchListener(){
+            // suppressed because the click on this is not supposed to do anything
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                v.performClick();
                 return true;
             }
         });

@@ -29,7 +29,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener, LocationListener {
 
@@ -76,7 +75,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {

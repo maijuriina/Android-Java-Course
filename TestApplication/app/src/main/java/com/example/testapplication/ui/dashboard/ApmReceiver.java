@@ -15,7 +15,7 @@ public class ApmReceiver extends BroadcastReceiver {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast
         String log = "Action: " + intent.getAction() + "\n" +
-                "URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n";
+                "URI: " + intent.toUri(Intent.URI_INTENT_SCHEME) + "\n";
         Log.d(TAG, log);
 
         if (state) {

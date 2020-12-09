@@ -37,9 +37,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener  {
             case R.id.gameButton:
                 Intent intent = new Intent(getActivity(), GameActivity.class);
                 startActivity(intent);
+                break;
             case R.id.guessButton:
                 Intent guessIntent = new Intent(getActivity(), GuessActivity.class);
                 startActivity(guessIntent);
+                break;
         }
     }
 }

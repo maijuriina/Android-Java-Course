@@ -47,7 +47,7 @@
     <string name="uiCompanyName">companyName</string>
     <string name="uiCompanyRegistrationDate">companyDate</string>
     <string name="uiCompanyType">companyType</string>
-    <string name="searchTitle">Search...</string>
+    <string name="searchTitle">Search…</string>
     <string name="searchHint">Filter by name</string>
     <string name="noResults">No results</string>
     <string name="XAMK" translatable="false">XAMK</string>
@@ -58,4 +58,9 @@
     <string name="showScore">Show score!</string>
     <string name="correct">Correct!</string>
     <string name="totalScore">Your score was</string>
+    <string name="topLeftCard">Top left card</string>
+    <string name="topRightCard">Top right card</string>
+    <string name="lowerLeftCard">Lower left card</string>
+    <string name="lowerRightCard">Lower right card</string>
+    <string name="dropDownArrow">Drop down arrow</string>
 </resources>

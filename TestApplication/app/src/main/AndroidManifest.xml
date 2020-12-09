@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".ui.home.ScoreDisplayActivity"
             android:parentActivityName=".ui.home.GuessActivity"/>
         <activity

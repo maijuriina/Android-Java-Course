@@ -167,7 +167,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             imageButton.startAnimation(fadeAnimationReset);
         }
 
-        int deck[] = {0, 1, 2, 3}; // array "deck" for all cards from 0 to 3
+        int[] deck = {0, 1, 2, 3}; // array "deck" for all cards from 0 to 3
         shuffleCards(deck, 4); // shuffle array for all its 4 cards
         for (int i = 0; i < 4; i++) {
         System.out.println(deck[i] + " " + "korttiarvo"); // loop through deck's cards one by one
@@ -176,14 +176,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public int checkHighScore() {
-        int highScore = myPreferences.getInt("HIGHSCORE", 0); // access preference-file and check for highScore if one is present;
-        return highScore;
+        return myPreferences.getInt("HIGHSCORE", 0);
     }
 
     public void updateHighScore(int highScore) {
         SharedPreferences.Editor myEditor = myPreferences.edit(); // call on SP-object's editor to add data to file
             myEditor.putInt("HIGHSCORE", highScore); // add Int to file with key
-            myEditor.commit();
+            myEditor.apply();
     }
 
     public void setCurrentScore(int currentScore) {

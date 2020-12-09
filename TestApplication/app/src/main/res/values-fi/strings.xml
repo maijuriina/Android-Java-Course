@@ -10,8 +10,11 @@
     <string name="open_game_exam">Pelaa Jännittävää Arvauspeliä!</string>
     <string name="game_name_exam">Arvaa AMK!</string>
     <string name="game_guide">Etsi maaginen kortti!</string>
-    <string name="highscore"></string>
     <string name="highscoretext">Ennätys: </string>
+    <string name="topLeftCard">Kortti vasemmalla ylhäällä</string>
+    <string name="topRightCard">Kortti oikealla ylhäällä</string>
+    <string name="lowerLeftCard">Kortti vasemmalla alhaalla</string>
+    <string name="lowerRightCard">Kortti oikealla alhaalla</string>
     <string name="title_home">Koti</string>
     <string name="title_location">Sijainti</string>
     <string name="dashboard_header">Koordinaattisi</string>
@@ -43,10 +46,11 @@
     <string name="uiCompanyName">companyName</string>
     <string name="uiCompanyRegistrationDate">companyDate</string>
     <string name="uiCompanyType">companyType</string>
-    <string name="searchTitle">Hae...</string>
+    <string name="searchTitle">Hae…</string>
     <string name="searchHint">Suodata nimellä</string>
     <string name="noResults">Ei hakutuloksia</string>
     <string name="showScore">Näytä tulos!</string>
     <string name="correct">Oikein!</string>
     <string name="totalScore">Tuloksesi oli</string>
+    <string name="dropDownArrow">Alasvetonuoli</string>
 </resources>

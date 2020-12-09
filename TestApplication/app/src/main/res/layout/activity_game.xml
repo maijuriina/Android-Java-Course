@@ -61,6 +61,7 @@
 
         <ImageButton
             android:id="@+id/imageButton0"
+            android:contentDescription=""
             android:layout_width="178dp"
             android:layout_height="232dp"
             app:srcCompat="@drawable/universe_cosmic_vacum_sq__800_800"

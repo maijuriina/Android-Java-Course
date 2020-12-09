@@ -70,6 +70,7 @@ public class GuessActivity extends AppCompatActivity  implements View.OnClickLis
         seekBar.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                v.performClick();
                 return true;
             }
         });

@@ -140,7 +140,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             // Attempt to start an activity that can handle the Intent
             startActivity(mapIntent);
         }
-
     }
 
     @Override

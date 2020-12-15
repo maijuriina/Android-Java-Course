@@ -61,12 +61,13 @@ public class CompanySearchActivity extends AppCompatActivity {
         noResultsIcon = findViewById(R.id.noResults);
         noResultsText = getResources().getString(R.string.noResults);
         noResultsTextView = findViewById(R.id.noResultsTextView);
+        mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
         findSearchTerm();
         if (terms != null) {
             buildUrl();
-            mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
             mRecyclerView.setVisibility(View.VISIBLE);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // layout manager for handling results
+            mRecyclerView.setHasFixedSize(true); // makes layout drawing faster
             startTheQueue();
         } else {
             noResultsFound();

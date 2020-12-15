@@ -42,19 +42,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v) { // for toggling visibility of extra information of companyItem in v
             mAdapter.onItemHolderClick(this);
-            if (!clicked) { // following is for hiding and showing rest of info
-                clicked = true;
-                mCompanyId.setVisibility(View.VISIBLE);
-                mCompanyRegistrationDate.setVisibility(View.VISIBLE);
-                mCompanyForm.setVisibility(View.VISIBLE);
-
-            } else {
-                clicked = false;
+            if (mCompanyForm.getVisibility() == View.VISIBLE) {
                 mCompanyId.setVisibility(View.GONE);
                 mCompanyRegistrationDate.setVisibility(View.GONE);
                 mCompanyForm.setVisibility(View.GONE);
+            } else {
+                mCompanyId.setVisibility(View.VISIBLE);
+                mCompanyRegistrationDate.setVisibility(View.VISIBLE);
+                mCompanyForm.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -84,9 +81,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mCompanyListFiltered = (ArrayList<CompanyItem>) filterResults.values;
+                mCompanyListFiltered = (ArrayList<CompanyItem>) filterResults.values; // filterResults given to mCompanyListFiltered
                 if(mCompanyListFiltered != null) {
-                    mCompanyList = mCompanyListFiltered;
+                    mCompanyList = mCompanyListFiltered; // if not null, passed to mCompanyList
                 }
                 notifyDataSetChanged();
             }

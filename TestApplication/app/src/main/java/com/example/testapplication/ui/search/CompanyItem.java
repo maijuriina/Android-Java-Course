@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class CompanyItem { // class for the company JSON-data that is returned from the search url
 
-    public CompanyItem c;
     private String companyId;
     private String companyName;
     private String dateOfRegistration;
@@ -50,7 +49,5 @@ public class CompanyItem { // class for the company JSON-data that is returned f
     public void setCompanyForm(String companyForm) {
         this.companyForm = companyForm;
     }
-
-    public CompanyItem getOneCompany() {return c;}
 
 }

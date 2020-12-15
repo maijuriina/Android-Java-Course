@@ -85,7 +85,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             }
         }
         // Other 'case' lines to check for other
-        // permissions this app might request.
+        // permissions this app might request
     }
 
     @Override

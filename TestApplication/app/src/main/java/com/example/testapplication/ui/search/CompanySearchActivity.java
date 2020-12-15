@@ -55,62 +55,65 @@ public class CompanySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_search);
-        foundResults = findViewById(R.id.foundResults);
+        foundResults = findViewById(R.id.foundResults); // pair xml elements
         loadingIcon = findViewById(R.id.indeterminateBar);
         receivedTerm = findViewById(R.id.searchTerm);
         noResultsIcon = findViewById(R.id.noResults);
         noResultsText = getResources().getString(R.string.noResults);
         noResultsTextView = findViewById(R.id.noResultsTextView);
         findSearchTerm();
-        buildUrl();
-        mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        startTheQueue();
+        if (terms != null) {
+            buildUrl();
+            mRecyclerView = findViewById(R.id.companyList); // introduce view that will contain listed cards
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // layout manager for handling results
+            startTheQueue();
+        } else {
+            noResultsFound();
+        }
     }
 
     private void findSearchTerm() {
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras(); // find Bundle of search terms
         Log.e("SEARCH TERM", String.valueOf(extras));
         if (extras == null) return;
-        terms = extras.getString("searchTerms");
+        terms = extras.getString("searchTerms"); // bind extras to String terms
         if (terms != null) {
-        String beautifiedTerms = terms.replace("_", " ");
+        String beautifiedTerms = terms.replace("_", " "); // modify url '_'s to ' 's
         receivedTerm.setText("'" + beautifiedTerms + "'");
         }
     }
 
-    private int findIndex(String wordToFind) {
-        int endingIndex;
-        Pattern word = Pattern.compile(wordToFind);
-        Matcher match = word.matcher(url);
+    private int findIndex(String wordToFind) { // function for finding ending index of a set word
+        int endingIndex; // index place where to begin inserting search term
+        Pattern word = Pattern.compile(wordToFind); // make searched wordToFind into a Pattern
+        Matcher match = word.matcher(url); // call word.matcher compared to url to find a match
         if (match.find()) {
-            endingIndex = match.end();
+            endingIndex = match.end(); // where match ends, there is endingIndex
             return endingIndex;
         }
         return 0;
     }
 
     private String buildUrl() {
-        return new StringBuilder(url).insert(findIndex("name="), terms).toString();
+        return new StringBuilder(url).insert(findIndex("name="), terms).toString(); // use StringBuilder for url to insert the search term where the ending index of wordToFind is
     }
 
     private void startTheQueue() {
-        if(findIndex("name=&") != 0) {
-            // löytää indeksin
+        if(findIndex("name=&") != 0) { // if meaning when the index is found, so not returning zero
             loadingIcon.setVisibility(View.VISIBLE);
             Log.e("URLI: ", url);
             requestQueue = Volley.newRequestQueue(this); // instantiate the requestQueue
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, buildUrl(), null, new Response.Listener<JSONObject>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(JSONObject response) { // new JSONObjectRequest for GETting data from YTJ
                     try {
-                        JSONArray myArray = response.getJSONArray("results");
-                        int total = response.getInt("totalResults");
-                        foundResults.setText(String.valueOf(total));
+                        JSONArray myArray = response.getJSONArray("results"); // store "results" into JSONArray
+                        int total = response.getInt("totalResults"); // get how many in total there were through "totalResults"
+                        foundResults.setText(String.valueOf(total)); // set in UI
                         Log.e("JSONHAKU", String.valueOf(total));
-                        for (int i = 0; i < myArray.length(); i++) {
-                            JSONObject currentJsonObject = myArray.getJSONObject(i);
+                        for (int i = 0; i < myArray.length(); i++) { // until array is looped through
+                            JSONObject currentJsonObject = myArray.getJSONObject(i); // find current object by i
                             String businessId = currentJsonObject.getString("businessId"); // get the data in question from JSON with its name tag and bind into variable
                             String name = currentJsonObject.getString("name");
                             String registrationDate = currentJsonObject.getString("registrationDate");
@@ -121,23 +124,20 @@ public class CompanySearchActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     loadingIcon.setVisibility(View.INVISIBLE);
-                    mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data and set it
-                    mAdapter.notifyDataSetChanged();
-                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter = new RecyclerViewAdapter(myDataSet); // specify an adapter to be used by data
+                    mAdapter.notifyDataSetChanged(); // notify adapter of changes in the data
+                    mRecyclerView.setAdapter(mAdapter); // set adapter
                 }
             },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            loadingIcon.setVisibility(View.INVISIBLE);
-                            noResultsTextView.setText(noResultsText);
-                            noResultsTextView.setVisibility(View.VISIBLE);
-                            noResultsIcon.setVisibility(View.VISIBLE);
+                            noResultsFound();
                             error.printStackTrace();
                         }
                     });
 
-            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)); // set policies for the search retry
             requestQueue.add(jsonObjectRequest); // Start the queue
         }
     }
@@ -160,13 +160,17 @@ public class CompanySearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mAdapter.getFilter().filter(query);
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(query); // filter results
+                }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String query) {
-                mAdapter.getFilter().filter(query);
+            public boolean onQueryTextChange(String query) { // when filter text changes, update filter results continuously on change
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(query);
+                }
                 return false;
             }
         });
@@ -180,6 +184,13 @@ public class CompanySearchActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void noResultsFound() { // function to show no result UI-elements
+        loadingIcon.setVisibility(View.INVISIBLE);
+        noResultsTextView.setText(noResultsText);
+        noResultsTextView.setVisibility(View.VISIBLE);
+        noResultsIcon.setVisibility(View.VISIBLE);
     }
 
 }

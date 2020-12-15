@@ -1,5 +1,4 @@
 ## Android-Java-Course
-Android Java Programming
 To run the project, place it into a folder, open Android Studio, select "File -> Import Project". Select this project, click Next and Finish.  
 Install an AVD to test the app. This application has been tested on Android Studio's Virtual Machine: Pixel 3, API 28.  
 

@@ -4,7 +4,7 @@ Android Java Programming
 # Test Application
 The Test Application has been made using Java and XML on Android Studio.  
 Tested on Android Studio's Virtual Machine: Pixel 3, API 28.  
-Specific build data can be found in the gradle-file.
+Specific build data can be found in the build.gradle file.
 
 #### The app consists of four main fragments:
 1. Home
